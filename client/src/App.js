@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import './App.css';
+// import './App.css';
 import Nav from './components/Nav';
-import { Container } from 'semantic-ui-react';
+import {  Grid } from 'semantic-ui-react';
+
 
 class App extends Component {
+
   render() {
+   
     return (
-      <Container>
-        <Nav/>
-        <div>
-          test
-        </div>
-      </Container>
+      <Grid padded centered>
+        <Grid.Column width="12">
+          <Nav  match={this.props.match} />
+        </Grid.Column>
+      </Grid>
     );
   }
 }

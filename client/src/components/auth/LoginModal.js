@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Modal, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Modal, Checkbox, Form, Message, Grid} from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 
 class LoginModal extends Component {
@@ -19,6 +19,20 @@ class LoginModal extends Component {
                 onClose={typeof handleClose === 'function' && handleClose} centered={false}>
                 <Modal.Header>Login</Modal.Header>
                 <Modal.Content>
+                <Grid padded='vertically'>
+                    <Grid.Row>
+                        <Grid.Column>
+                            <Message
+                                error
+                                header='There was some errors with your submission'
+                                list={[
+                                    'You must include both a upper and lower case letters in your password.',
+                                    'You need to select your home country.',
+                                ]}
+                            />
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Field>
                             <label>Email</label>

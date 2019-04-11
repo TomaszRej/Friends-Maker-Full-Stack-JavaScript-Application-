@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Menu } from 'semantic-ui-react'
-import LoginModal from './LoginModal';
-import RegisterModal from './RegisterModal';
+import LoginModal from './auth/LoginModal';
+import RegisterModal from './auth/RegisterModal';
 import { Redirect } from 'react-router-dom';
 
 
@@ -30,7 +30,7 @@ export default class MenuExampleSecondary extends Component {
     }
     return (
       <>
-        <Menu secondary>
+        <Menu id="menu" secondary>
           <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
           <Menu.Menu position='right'>
             <Menu.Item

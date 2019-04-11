@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <Grid padded centered>
         <Grid.Column width="12">
-          <Nav  match={this.props.match} />
+          <Nav/>
         </Grid.Column>
       </Grid>
     );

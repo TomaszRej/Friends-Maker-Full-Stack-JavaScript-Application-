@@ -9,7 +9,8 @@ import {
     //   LOGIN_FAIL,
     //   LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    REGISTER_LOADING
 } from './types';
 
 // // Check token & load user
@@ -44,6 +45,11 @@ export const register = ({ name, email, password, confirmPassword }) => async di
 
     // Request body
     const body = JSON.stringify({ name, email, password, confirmPassword });
+
+    dispatch({
+        type: REGISTER_LOADING
+    })
+
 
     try {
         const res = await axios.post('http://localhost:8000/api/users/', body, config);

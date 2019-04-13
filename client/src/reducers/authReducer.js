@@ -5,6 +5,7 @@ import {
     // LOGIN_SUCCESS,
     // LOGIN_FAIL,
     // LOGOUT_SUCCESS,
+    REGISTER_LOADING,
     REGISTER_SUCCESS,
     REGISTER_FAIL
   } from '../actions/types';
@@ -31,6 +32,11 @@ import {
           user: action.payload
         };
       // case LOGIN_SUCCESS:
+      case REGISTER_LOADING:
+      return {
+        ...state,
+        isLoading: true
+      }
       case REGISTER_SUCCESS:
         //localStorage.setItem('token', action.payload.token);
         return {

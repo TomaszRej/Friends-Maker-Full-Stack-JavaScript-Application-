@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Modal, Form, Message, Grid } from 'semantic-ui-react'
+import { Button, Modal, Form, Message, Grid, Segment, Dimmer, Loader, Image } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import { register } from '../../actions/authActions';
 import { clearErrors } from '../../actions/errorActions';
@@ -18,7 +18,7 @@ class RegisterModal extends Component {
     componentDidUpdate(prevProps) {
         const { error, handleOpenLoginModal, handleCloseRegisterModal, isAuthenticated } = this.props;
 
-        console.log(error, prevProps.error ,"porownaine z poprzednim")
+        console.log(error, prevProps.error, "porownaine z poprzednim")
         if (error !== prevProps.error) {
             // Check for register error
 
@@ -52,7 +52,7 @@ class RegisterModal extends Component {
         // }
         if (isAuthenticated === true) {
             console.log(typeof handleOpenLoginModal, typeof handleCloseRegisterModal);
-            
+
             if (typeof handleOpenLoginModal === 'function' && typeof handleCloseRegisterModal === 'function') {
                 handleOpenLoginModal();
                 handleCloseRegisterModal()
@@ -66,24 +66,24 @@ class RegisterModal extends Component {
     handleChange = (e) => this.setState({ [e.target.name]: e.target.value })
     handleSubmit = (e) => {
         e.preventDefault();
-        const { name, email, password, confirmPassword  } = this.state;
+        const { name, email, password, confirmPassword } = this.state;
         const { register, handleOpenLoginModal, handleCloseRegisterModal, isAuthenticated } = this.props;
 
         //ES6 syntax
         const newUser = { name, email, password, confirmPassword };
         register(newUser);
         console.warn(this.state.message.length, "length");
-        
+
         if (isAuthenticated === true) {
             console.log(typeof handleOpenLoginModal, typeof handleCloseRegisterModal);
-            
+
             if (typeof handleOpenLoginModal === 'function' && typeof handleCloseRegisterModal === 'function') {
                 handleOpenLoginModal();
                 handleCloseRegisterModal()
             }
         }
 
-  
+
 
 
     }
@@ -104,41 +104,59 @@ class RegisterModal extends Component {
         return errors
     }
 
+    renderModalContent = () => {
+        const { name, email, password, confirmPassword } = this.state;
+        const { isLoading } = this.props;
+        const content = isLoading ?
+            <Segment style={{ height: '300px' }}>
+                <Dimmer active>
+                    <Loader size='massive'>Loading</Loader>
+                </Dimmer>
+            </Segment> :
+            <Form onSubmit={this.handleSubmit}>
+                <Form.Field>
+                    <label>Name</label>
+                    <input name='name' placeholder='Name' value={name} onChange={this.handleChange} />
+                </Form.Field>
+                <Form.Field>
+                    <label>Email</label>
+                    <input name='email' placeholder='Email' value={email} onChange={this.handleChange} />
+                </Form.Field>
+                <Form.Field>
+                    <label>Password</label>
+                    <input name='password' type='password' placeholder='Password' value={password} onChange={this.handleChange} />
+                </Form.Field>
+                <Form.Field>
+                    <label>Confirm password</label>
+                    <input name='confirmPassword' type='password' placeholder='Confirm password' value={confirmPassword} onChange={this.handleChange} />
+                </Form.Field>
+                <Button color='orange' fluid type='submit'>Submit</Button>
+            </Form>
+
+        return content
+    }
+
 
     render() {
-        const { name, email, password, confirmPassword } = this.state;
+        const { handleCloseRegisterModal } = this.props;
         return (
+
             <Modal size='tiny' open={this.props.modalOpen}
-                onClose={this.props.handleClose} centered={false}>
+                onClose={typeof handleCloseRegisterModal === 'function' && handleCloseRegisterModal} centered={false}>
                 <Modal.Header>Register</Modal.Header>
                 <Modal.Content>
                     {this.renderErrorMessage()}
-                    <Form onSubmit={this.handleSubmit}>
-                        <Form.Field>
-                            <label>Name</label>
-                            <input name='name' placeholder='Name' value={name} onChange={this.handleChange} />
-                        </Form.Field>
-                        <Form.Field>
-                            <label>Email</label>
-                            <input name='email' placeholder='Email' value={email} onChange={this.handleChange} />
-                        </Form.Field>
-                        <Form.Field>
-                            <label>Password</label>
-                            <input name='password' type='password' placeholder='Password' value={password} onChange={this.handleChange} />
-                        </Form.Field>
-                        <Form.Field>
-                            <label>Confirm password</label>
-                            <input name='confirmPassword' type='password' placeholder='Confirm password' value={confirmPassword} onChange={this.handleChange} />
-                        </Form.Field>
-                        <Button color='orange' fluid type='submit'>Submit</Button>
-                    </Form>
+                    {this.renderModalContent()}
+
                 </Modal.Content>
             </Modal>
         )
+
     }
 }
 
 const mapStateToProps = state => ({
+    isLoading: state.auth.isLoading,
     isAuthenticated: state.auth.isAuthenticated,
     error: state.error
 });

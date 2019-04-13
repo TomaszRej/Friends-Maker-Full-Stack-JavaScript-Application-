@@ -10,7 +10,12 @@ class LoginModal extends Component {
     }
 
     handleChange = (e) => this.setState({ [e.target.name]: e.target.value })
-    handleSubmit = () => console.log('submitted')
+    handleSubmit = () => {
+        const { handleCloseLoginModal } = this.props;
+        if (typeof handleCloseLoginModal === 'function') {
+            handleCloseLoginModal();
+        }
+    }
 
     renderErrorMessage = () => {
         const { message } = this.state;
@@ -32,10 +37,10 @@ class LoginModal extends Component {
     }
     render() {
         const { email, password } = this.state;
-        const { handleClose } = this.props;
+        const { handleCloseLoginModal } = this.props;
         return (
             <Modal size='tiny' open={this.props.modalOpen}
-                onClose={typeof handleClose === 'function' && handleClose} centered={false}>
+                onClose={typeof handleCloseLoginModal === 'function' && handleCloseLoginModal} centered={false}>
                 <Modal.Header>Login</Modal.Header>
                 <Modal.Content>
                     {this.renderErrorMessage()}

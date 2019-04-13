@@ -14,7 +14,7 @@ export default class MenuExampleSecondary extends Component {
   }
 
   handleItemClick = (e, { name }) => {
-    name === 'login' && this.setState({ loginModalOpen: true })
+    name === 'login' && this.setState({ loginModalOpen: !this.state.loginModalOpen})
     name === 'register' && this.setState({ registerModalOpen: true })
     name === 'home' && this.setState({ redirect: '/' })
     this.setState({ activeItem: name })
@@ -23,6 +23,21 @@ export default class MenuExampleSecondary extends Component {
   handleCloseLoginModal = () => this.setState({ loginModalOpen: false })
   handleCloseRegisterModal = () => this.setState({ registerModalOpen: false })
   handleOpenLoginModal = () => this.setState({ loginModalOpen: true })
+
+  handleCloseModal = (e) => {
+    e.preventDefault();
+    console.log('rrrrrrrrrclosemodal');
+    
+    console.log(
+      e.target.value
+    );
+    this.setState({
+      loginModalOpen: false,
+      registerModalOpen: false
+    })
+  }
+
+ 
 
   render() {
     const { activeItem, redirect } = this.state
@@ -46,8 +61,8 @@ export default class MenuExampleSecondary extends Component {
             />
           </Menu.Menu>
         </Menu>
-        <LoginModal match={this.props.match} modalOpen={this.state.loginModalOpen} handleCloseLoginModal={this.handleCloseLoginModal} />
-        <RegisterModal modalOpen={this.state.registerModalOpen} handleCloseRegisterModal={this.handleCloseRegisterModal}  handleOpenLoginModal={this.handleOpenLoginModal}/>
+        <LoginModal      modalOpen={this.state.loginModalOpen} handleCloseLoginModal={this.handleCloseLoginModal} />
+        <RegisterModal  modalOpen={this.state.registerModalOpen} handleCloseRegisterModal={this.handleCloseRegisterModal} handleOpenLoginModal={this.handleOpenLoginModal} />
       </>
     )
   }

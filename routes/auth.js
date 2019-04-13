@@ -1,5 +1,5 @@
 //const User = require('../models/User');
-const { body } = require('express-validator/check');
+//const { body } = require('express-validator/check');
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
@@ -9,26 +9,7 @@ const authController = require('../controllers/authController')
 // @route   POST api/auth
 // @desc    Auth user
 // @access  Public
-router.post('/',  [
-    body('email')
-      .isEmail()
-      .withMessage('Please enter a valid email.')
-      .custom((value, { req }) => {
-        return User.findOne({ email: value }).then(userDoc => {
-          if (userDoc) {
-            return Promise.reject('E-Mail address already exists!');
-          }
-        });
-      })
-      .normalizeEmail(),
-    body('password')
-      .trim()
-      .isLength({ min: 5 }),
-    body('name')
-      .trim()
-      .not()
-      .isEmpty()
-  ], authController.registerUser);
+router.post('/', authController.registerUser);
 
 
 //(req, res) => {

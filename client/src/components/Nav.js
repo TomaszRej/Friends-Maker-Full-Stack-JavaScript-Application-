@@ -22,6 +22,7 @@ export default class MenuExampleSecondary extends Component {
 
   handleCloseLoginModal = () => this.setState({ loginModalOpen: false })
   handleCloseRegisterModal = () => this.setState({ registerModalOpen: false })
+  handleOpenLoginModal = () => this.setState({ loginModalOpen: true })
 
   render() {
     const { activeItem, redirect } = this.state
@@ -45,8 +46,8 @@ export default class MenuExampleSecondary extends Component {
             />
           </Menu.Menu>
         </Menu>
-        <LoginModal match={this.props.match} modalOpen={this.state.loginModalOpen} handleClose={this.handleCloseLoginModal} />
-        <RegisterModal modalOpen={this.state.registerModalOpen} handleClose={this.handleCloseRegisterModal} />
+        <LoginModal match={this.props.match} modalOpen={this.state.loginModalOpen} handleCloseLoginModal={this.handleCloseLoginModal} />
+        <RegisterModal modalOpen={this.state.registerModalOpen} handleCloseRegisterModal={this.handleCloseRegisterModal}  handleOpenLoginModal={this.handleOpenLoginModal}/>
       </>
     )
   }

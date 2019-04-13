@@ -34,7 +34,7 @@ import {
 // };
 
 // Register User
-export const register = ({ name, email, password }) => async dispatch => {
+export const register = ({ name, email, password, confirmPassword }) => async dispatch => {
     // Headers
     const config = {
         headers: {
@@ -43,7 +43,7 @@ export const register = ({ name, email, password }) => async dispatch => {
     };
 
     // Request body
-    const body = JSON.stringify({ name, email, password });
+    const body = JSON.stringify({ name, email, password, confirmPassword });
 
     try {
         const res = await axios.post('http://localhost:8000/api/users/', body, config);
@@ -54,7 +54,7 @@ export const register = ({ name, email, password }) => async dispatch => {
     } catch (err) {
         console.warn(err,'eeeeeeeeee');
         dispatch(
-            returnErrors(err.data, err.response.status, 'REGISTER_FAIL')
+            returnErrors(err, err.response.status, 'REGISTER_FAIL')
         );
         dispatch({
             type: REGISTER_FAIL

@@ -5,12 +5,13 @@ import {
     //   USER_LOADED,
     //   USER_LOADING,
     //   AUTH_ERROR,
-    //   LOGIN_SUCCESS,
-    //   LOGIN_FAIL,
+    LOGIN_SUCCESS,
+    LOGIN_FAIL,
     //   LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
     REGISTER_FAIL,
-    REGISTER_LOADING
+    REGISTER_LOADING,
+    OPEN_LOGIN_MODAL
 } from './types';
 
 // // Check token & load user
@@ -50,43 +51,50 @@ export const register = ({ name, email, password, confirmPassword }) => async di
         type: REGISTER_LOADING
     })
 
-
     try {
         const res = await axios.post('http://localhost:8000/api/users/', body, config);
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
         })
+        dispatch({
+            type: OPEN_LOGIN_MODAL
+        })
     } catch (err) {
-        console.warn(err,'eeeeeeeeee');
         dispatch(
             returnErrors(err, err.response.status, 'REGISTER_FAIL')
         );
         dispatch({
             type: REGISTER_FAIL
         });
-
     }
+};
+// Login User
+export const login = ({ email, password }) => async dispatch => {
+    // Headers
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
 
+    // Request body
+    const body = JSON.stringify({ email, password });
 
-
-    // axios
-    //     .post('http://localhost:8000/api/users/', body, config)
-    //     .then(res =>
-    //         dispatch({
-    //             type: REGISTER_SUCCESS,
-    //             payload: res.data
-    //         })
-    //     )
-    //     .catch(err => {
-    //         console.warn(err);
-    //         dispatch(
-    //             returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL')
-    //         );
-    //         dispatch({
-    //             type: REGISTER_FAIL
-    //         });
-    //     });
+    try {
+        const res = await axios.post('http://localhost:8000/api/users/login', body, config);
+        dispatch({
+            type: LOGIN_SUCCESS,
+            payload: res.data
+        })
+    } catch (err) {
+        dispatch(
+            returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL')
+        );
+        dispatch({
+            type: LOGIN_FAIL
+        });
+    }
 };
 
 // // Login User

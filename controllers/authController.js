@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 const User = require('../models/User');
 validateRegisterInput = require('../validation/register')
-
+validateLoginInput = require('../validation/login');
 exports.registerUser = async (req, res, next) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -34,6 +34,63 @@ exports.registerUser = async (req, res, next) => {
     next(err);
   }
 }
+
+exports.loginUser = async (req, res, next) => {
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json({ "message": errors });
+  }
+
+
+
+  const email = req.body.email;
+  const password = req.body.password;
+
+  // Find user by email
+  try {
+  User.findOne({ email }).then(user => {
+    // Check for user
+    if (!user) {
+      errors.email = 'User not found';
+      return res.status(404).json(errors);
+    } else {
+      console.log(user,'user');
+      
+    }
+    
+
+    // // Check Password
+    // bcrypt.compare(password, user.password).then(isMatch => {
+    //   if (isMatch) {
+    //     // User Matched
+    //     const payload = { id: user.id, name: user.name, avatar: user.avatar }; // Create JWT Payload
+
+    //     // Sign Token
+    //     jwt.sign(
+    //       payload,
+    //       keys.secretOrKey,
+    //       { expiresIn: 3600 },
+    //       (err, token) => {
+    //         res.json({
+    //           success: true,
+    //           token: 'Bearer ' + token
+    //         });
+    //       }
+    //     );
+    //   } else {
+    //     errors.password = 'Password incorrect';
+    //     return res.status(400).json(errors);
+    //   }
+     });
+
+  } catch (er)  {
+
+  }
+  
+}
+
 // exports.postUser = async (req, res, next) => {
 //   console.log('post route');
 //   const newUser = new User({

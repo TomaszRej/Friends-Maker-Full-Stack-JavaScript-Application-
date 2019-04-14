@@ -3,9 +3,10 @@ import { Menu } from 'semantic-ui-react'
 import LoginModal from './auth/LoginModal';
 import RegisterModal from './auth/RegisterModal';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { openLoginModal, openRegisterModal}  from '../actions/layoutActions';
 
-
-export default class MenuExampleSecondary extends Component {
+class MainMenu extends Component {
   state = {
     redirect: '',
     activeItem: 'home',
@@ -14,8 +15,13 @@ export default class MenuExampleSecondary extends Component {
   }
 
   handleItemClick = (e, { name }) => {
-    name === 'login' && this.setState({ loginModalOpen: !this.state.loginModalOpen})
-    name === 'register' && this.setState({ registerModalOpen: true })
+    const { openLoginModal, openRegisterModal } = this.props;
+    //name === 'login' && this.setState({ loginModalOpen: !this.state.loginModalOpen})
+      name === 'login' && openLoginModal();
+      name === 'register' && openRegisterModal();
+
+    //name === 'register' && this.setState({ registerModalOpen: true })
+    
     name === 'home' && this.setState({ redirect: '/' })
     this.setState({ activeItem: name })
   }
@@ -41,6 +47,9 @@ export default class MenuExampleSecondary extends Component {
 
   render() {
     const { activeItem, redirect } = this.state
+    const { loginModalOpened, registerModalOpened} = this.props;
+    console.warn(registerModalOpened, 'regModOpe');
+
     if (redirect !== '') {
       return <Redirect to={redirect} />
     }
@@ -61,9 +70,28 @@ export default class MenuExampleSecondary extends Component {
             />
           </Menu.Menu>
         </Menu>
-        <LoginModal      modalOpen={this.state.loginModalOpen} handleCloseLoginModal={this.handleCloseLoginModal} />
-        <RegisterModal  modalOpen={this.state.registerModalOpen} handleCloseRegisterModal={this.handleCloseRegisterModal} handleOpenLoginModal={this.handleOpenLoginModal} />
+        <LoginModal      modalOpen={loginModalOpened} //handleCloseLoginModal={this.handleCloseLoginModal} />
+        />
+        <RegisterModal  modalOpen={registerModalOpened} 
+        // handleCloseRegisterModal={this.handleCloseRegisterModal} 
+        handleOpenLoginModal={this.handleOpenLoginModal}
+         /> 
+
+
+         {/* <RegisterModal  modalOpen={this.state.registerModalOpen} handleCloseRegisterModal={this.handleCloseRegisterModal} handleOpenLoginModal={this.handleOpenLoginModal} />  */}
       </>
     )
   }
 }
+const mapStateToProps = state => {
+  return {
+    loginModalOpened: state.layout.loginModalOpened,
+    registerModalOpened: state.layout.registerModalOpened
+  }
+}
+// const mapStateToProps = state => ({
+//   auth: state.auth,
+//   errors: state.errors
+// });
+
+export default connect(mapStateToProps, {openLoginModal, openRegisterModal })(MainMenu);

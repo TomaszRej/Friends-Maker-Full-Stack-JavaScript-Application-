@@ -1,15 +1,15 @@
-//const User = require('../models/User');
-//const { body } = require('express-validator/check');
 const express = require('express');
 const router = express.Router();
+
 const User = require('../models/User');
-
-
 const authController = require('../controllers/authController')
+
 // @route   POST api/auth
 // @desc    Auth user
 // @access  Public
 router.post('/', authController.registerUser);
+
+router.post('/login', authController.loginUser);
 
 
 //(req, res) => {

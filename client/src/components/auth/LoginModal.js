@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Button, Modal, Checkbox, Form, Message, Grid } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
+import { openLoginModal, closeLoginModal } from '../../actions/layoutActions';
+import { connect } from 'react-redux';
 
 class LoginModal extends Component {
     state = {
@@ -11,10 +13,17 @@ class LoginModal extends Component {
 
     handleChange = (e) => this.setState({ [e.target.name]: e.target.value })
     handleSubmit = () => {
-        const { handleCloseLoginModal } = this.props;
-        if (typeof handleCloseLoginModal === 'function') {
-            handleCloseLoginModal();
-        }
+        const { email, password } = this.state;
+        const { handleCloseLoginModal, closeLoginModal } = this.props;
+        //ZAMIENIC NA REDUCEREM
+        // if (typeof handleCloseLoginModal === 'function') {
+        //     handleCloseLoginModal();
+        // }
+
+        closeLoginModal();
+        
+
+
     }
 
     renderErrorMessage = () => {
@@ -37,10 +46,13 @@ class LoginModal extends Component {
     }
     render() {
         const { email, password } = this.state;
-        const { handleCloseLoginModal } = this.props;
+        const { handleCloseLoginModal, loginModalOpened, closeLoginModal } = this.props;
+        console.error(loginModalOpened)
         return (
-            <Modal size='tiny' open={this.props.modalOpen}
-                onClose={typeof handleCloseLoginModal === 'function' && handleCloseLoginModal} centered={false}>
+             <Modal size='tiny' open={loginModalOpened}
+                centered={false}
+                 onClose={closeLoginModal}>
+                
                 <Modal.Header>Login</Modal.Header>
                 <Modal.Content>
                     {this.renderErrorMessage()}
@@ -66,4 +78,10 @@ class LoginModal extends Component {
     }
 }
 
-export default LoginModal;
+const mapStateToProps = state => {
+    return {
+        loginModalOpened: state.layout.loginModalOpened
+    }
+}
+
+export default connect(mapStateToProps, { openLoginModal, closeLoginModal })(LoginModal);

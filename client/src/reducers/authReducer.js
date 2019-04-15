@@ -2,9 +2,10 @@ import {
   USER_LOADED,
   USER_LOADING,
   // AUTH_ERROR,
+  LOGIN_LOADING,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  // LOGOUT_SUCCESS,
+   LOGOUT_SUCCESS,
   REGISTER_LOADING,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -33,7 +34,7 @@ export default function (state = initialState, action) {
     //     isLoading: false,
     //     user: action.payload
     //   };
-   
+
     case REGISTER_LOADING:
       return {
         ...state,
@@ -48,25 +49,39 @@ export default function (state = initialState, action) {
         isLoading: false
       };
     // case AUTH_ERROR:
-     // case LOGIN_SUCCESS:
-     case LOGIN_SUCCESS: 
-     return {
-      ...state,
-      token: action.payload.token,
-      user: action.payload,
-      isAuthenticated: true,
-      isLoading: false
-     }
+    case LOGIN_LOADING:
+      return {
+        ...state,
+        isLoading: true
+      }
+    // case LOGIN_SUCCESS:
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        token: action.payload.token,
+        user: action.payload,
+        isAuthenticated: true,
+        isLoading: false
+      }
     // case LOGIN_FAIL:
-    case LOGIN_FAIL: 
-    return {
-      ...state,
-      token: null,
-      user: null,
-      isAuthenticated: false,
-      isLoading: false
-    }
+    case LOGIN_FAIL:
+      return {
+        ...state,
+        token: null,
+        user: null,
+        isAuthenticated: false,
+        isLoading: false
+      }
     // case LOGOUT_SUCCESS:
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        token: null,
+        user: null,
+        isAuthenticated: false,
+        isLoading: false
+
+      }
     case REGISTER_FAIL:
       //localStorage.removeItem('token');
       return {

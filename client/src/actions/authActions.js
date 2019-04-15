@@ -1,13 +1,14 @@
 import axios from 'axios';
-import { returnErrors } from './errorActions';
+import { returnErrors, clearErrors } from './errorActions';
 
 import {
     //   USER_LOADED,
     //   USER_LOADING,
     //   AUTH_ERROR,
+    LOGIN_LOADING,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
-    //   LOGOUT_SUCCESS,
+    LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
     REGISTER_FAIL,
     REGISTER_LOADING,
@@ -48,6 +49,8 @@ export const register = ({ name, email, password, confirmPassword }) => async di
 
     // Request body
     const body = JSON.stringify({ name, email, password, confirmPassword });
+
+   
 
     dispatch({
         type: REGISTER_LOADING
@@ -90,20 +93,19 @@ export const login = ({ email, password }) => async dispatch => {
     // Request body
     const body = JSON.stringify({ email, password });
 
-    // dispatch({
-    //     type: REGISTER_LOADING
-    // })
+   
 
     dispatch({
-        type: LOGIN_SUCCESS,
-        payload: '123'
+        type: LOGIN_LOADING,
+    
     })
+
     try {
         const res = await axios.post('http://localhost:8000/api/users/login', body, config);
         console.log(res, 'response data z auth actions :)');
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: res
+            payload: res.data.user
         })
         dispatch({
             type: CLOSE_LOGIN_MODAL,
@@ -115,19 +117,19 @@ export const login = ({ email, password }) => async dispatch => {
         dispatch(
             returnErrors(err, err.response.status, 'REGISTER_FAIL')
         );
-        // dispatch({
-        //     type: REGISTER_FAIL
-        // });
+        dispatch({
+            type: LOGIN_FAIL
+        });
     }
 
-
-
-    // dispatch({
-    //     type: LOGIN_SUCCESS,
-    //     payload: 'test payload'
-    // })
-
 }
+
+// // Logout User
+export const logout = () => {
+  return {
+    type: LOGOUT_SUCCESS
+  };
+};
 
 // export const login = ((req, res) => {
 //     const { errors, isValid } = validateLoginInput(req.body);
@@ -209,12 +211,7 @@ export const login = ({ email, password }) => async dispatch => {
 
 //x
 
-// // Logout User
-// export const logout = () => {
-//   return {
-//     type: LOGOUT_SUCCESS
-//   };
-// };
+
 
 // // Setup config/headers and token
 // export const tokenConfig = getState => {

@@ -4,27 +4,29 @@ import LoginModal from './auth/LoginModal';
 import RegisterModal from './auth/RegisterModal';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { openLoginModal, openRegisterModal}  from '../actions/layoutActions';
+import { openLoginModal, openRegisterModal } from '../actions/layoutActions';
+import { logout } from '../actions/authActions';
 
 class MainMenu extends Component {
   state = {
-    redirect: '',
+    // redirect: '',
     activeItem: '',
     loginModalOpen: false,
     registerModalOpen: false
   }
 
   handleItemClick = (e, { name }) => {
-    const { openLoginModal, openRegisterModal } = this.props;
+    const { openLoginModal, openRegisterModal, logout } = this.props;
     //name === 'login' && this.setState({ loginModalOpen: !this.state.loginModalOpen})
-      name === 'login' && openLoginModal();
-      name === 'register' && openRegisterModal();
+    name === 'login' && openLoginModal();
+    name === 'register' && openRegisterModal();
+    name === 'logout' && logout();
 
     //name === 'register' && this.setState({ registerModalOpen: true })
-    
+
     name === 'home' && this.setState({ activeItem: name });
   }
-  
+
 
   handleCloseLoginModal = () => this.setState({ loginModalOpen: false })
   handleCloseRegisterModal = () => this.setState({ registerModalOpen: false })
@@ -33,7 +35,7 @@ class MainMenu extends Component {
   handleCloseModal = (e) => {
     e.preventDefault();
     console.log('rrrrrrrrrclosemodal');
-    
+
     console.log(
       e.target.value
     );
@@ -43,48 +45,64 @@ class MainMenu extends Component {
     })
   }
 
-  
+
 
   render() {
     const { activeItem, redirect } = this.state
-    const { loginModalOpened, registerModalOpened} = this.props;
+    const { loginModalOpened, registerModalOpened, user } = this.props;
     console.warn(registerModalOpened, 'regModOpe');
 
-    if (redirect !== '') {
-      return <Redirect to={redirect} />
-    }
+    // if (redirect !== '') {
+    //   return <Redirect to={redirect} />
+    // }
     return (
       <>
         <Menu id="menu" secondary>
-          <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
-          <Menu.Menu position='right'>
-            <Menu.Item
-              name='login'
-              active={activeItem === 'login'}
-              onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name='register'
-              active={activeItem === 'register'}
-              onClick={this.handleItemClick}
-            />
-          </Menu.Menu>
+          {user
+            ?
+            <Menu.Menu position='right'>
+              <Menu.Item
+                name='logout'
+                active={activeItem === 'logout'}
+                onClick={this.handleItemClick}
+              />
+            </Menu.Menu>
+            :
+            <Menu.Menu position='right'>
+              <Menu.Item
+                name='login'
+                active={activeItem === 'login'}
+                onClick={this.handleItemClick}
+              />
+              <Menu.Item
+                name='register'
+                active={activeItem === 'register'}
+                onClick={this.handleItemClick}
+              />
+            </Menu.Menu>
+          }
+
+
+
+
+
         </Menu>
-        <LoginModal      modalOpen={loginModalOpened} //handleCloseLoginModal={this.handleCloseLoginModal} />
+        <LoginModal modalOpen={loginModalOpened} //handleCloseLoginModal={this.handleCloseLoginModal} />
         />
-        <RegisterModal  modalOpen={registerModalOpened} 
-        // handleCloseRegisterModal={this.handleCloseRegisterModal} 
-        handleOpenLoginModal={this.handleOpenLoginModal}
-         /> 
+        <RegisterModal modalOpen={registerModalOpened}
+          // handleCloseRegisterModal={this.handleCloseRegisterModal} 
+          handleOpenLoginModal={this.handleOpenLoginModal}
+        />
 
 
-         {/* <RegisterModal  modalOpen={this.state.registerModalOpen} handleCloseRegisterModal={this.handleCloseRegisterModal} handleOpenLoginModal={this.handleOpenLoginModal} />  */}
+        {/* <RegisterModal  modalOpen={this.state.registerModalOpen} handleCloseRegisterModal={this.handleCloseRegisterModal} handleOpenLoginModal={this.handleOpenLoginModal} />  */}
       </>
     )
   }
 }
 const mapStateToProps = state => {
   return {
+    user: state.auth.user,
     loginModalOpened: state.layout.loginModalOpened,
     registerModalOpened: state.layout.registerModalOpened
   }
@@ -94,4 +112,4 @@ const mapStateToProps = state => {
 //   errors: state.errors
 // });
 
-export default connect(mapStateToProps, {openLoginModal, openRegisterModal })(MainMenu);
+export default connect(mapStateToProps, { openLoginModal, openRegisterModal, logout })(MainMenu);

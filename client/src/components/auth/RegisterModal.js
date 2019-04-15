@@ -18,14 +18,14 @@ class RegisterModal extends Component {
 
 
     componentDidUpdate(prevProps) {
-        const { error, handleOpenLoginModal, handleCloseRegisterModal, isAuthenticated } = this.props;
+        const { error, isAuthenticated } = this.props;
 
         console.log(error, prevProps.error, "porownaine z poprzednim")
         if (error !== prevProps.error) {
             // Check for register error
-
             let messages = [];
             let errors = error.message.response.data.message;
+
             if (typeof errors === 'object') {
                 for (const el in errors) {
                     messages.push(errors[el]);
@@ -37,61 +37,31 @@ class RegisterModal extends Component {
             }
 
             if (error.id === 'REGISTER_FAIL') {
-                //this.setState({ message: messages }, () => console.log(this.state.message, 'state.mesage'));
-                this.setState({ message: messages }, () => console.log(this.state.message, 'state.mesage'));
+
+                this.setState({ message: messages });
             } else {
                 this.setState({ message: null });
 
             }
         }
 
-
         // if (isAuthenticated === true) {
-        //     console.log(typeof handleOpenLoginModal, typeof handleCloseRegisterModal);
-
-        //     if (typeof handleOpenLoginModal === 'function' && typeof handleCloseRegisterModal === 'function') {
-        //         handleOpenLoginModal();
-        //         handleCloseRegisterModal()
-        //     }
+        //     closeRegisterModal();
         // }
-
-        if (isAuthenticated === true) {
-            closeRegisterModal();
-            openLoginModal();
-        }
 
     }
 
 
-    handleClose = () => this.setState({ modalOpen: false });
+
     handleChange = (e) => this.setState({ [e.target.name]: e.target.value })
     handleSubmit = (e) => {
         e.preventDefault();
         const { name, email, password, confirmPassword } = this.state;
-        const { register, handleOpenLoginModal, handleCloseRegisterModal, isAuthenticated, closeRegisterModal } = this.props;
+        const { register } = this.props;
 
         // //ES6 syntax
         const newUser = { name, email, password, confirmPassword };
         register(newUser);
-        console.warn(this.state.message.length, "length");
-
-        // if (isAuthenticated === true) {
-        //     console.log(typeof handleOpenLoginModal, typeof handleCloseRegisterModal);
-
-        //     if (typeof handleOpenLoginModal === 'function') {
-        //         handleOpenLoginModal();
-        //         // handleCloseRegisterModal()
-        //     }
-        // }
-
-
-        if (isAuthenticated === true) {
-            closeRegisterModal();
-            openLoginModal();
-        }
-
-
-
     }
     handleCloseModal = () => {
         const { closeRegisterModal } = this.props;
@@ -149,13 +119,10 @@ class RegisterModal extends Component {
 
 
     render() {
-        const { handleCloseRegisterModal, registerModalOpened } = this.props;
+        const { registerModalOpened } = this.props;
         return (
-
             <Modal size='tiny' open={registerModalOpened}
-            onClose={this.handleCloseModal} centered={false} >
-            {/* // onClose={typeof handleCloseRegisterModal === 'function' && handleCloseRegisterModal} centered={false} */}
-            
+                onClose={this.handleCloseModal} centered={false} >
                 <Modal.Header>Register</Modal.Header>
                 <Modal.Content>
                     {this.renderErrorMessage()}
@@ -175,4 +142,11 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { register, clearErrors, openLoginModal, openRegisterModal, closeRegisterModal })(RegisterModal);
+export default connect(mapStateToProps,
+    {
+        register,
+        clearErrors,
+        openLoginModal,
+        openRegisterModal,
+        closeRegisterModal
+    })(RegisterModal);

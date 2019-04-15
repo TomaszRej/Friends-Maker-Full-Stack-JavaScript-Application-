@@ -11,7 +11,9 @@ import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
     REGISTER_LOADING,
-    OPEN_LOGIN_MODAL
+    OPEN_LOGIN_MODAL,
+    CLOSE_LOGIN_MODAL,
+    CLOSE_REGISTER_MODAL
 } from './types';
 
 // // Check token & load user
@@ -60,6 +62,9 @@ export const register = ({ name, email, password, confirmPassword }) => async di
         dispatch({
             type: OPEN_LOGIN_MODAL
         })
+        dispatch({
+            type: CLOSE_REGISTER_MODAL
+        })
     } catch (err) {
         dispatch(
             returnErrors(err, err.response.status, 'REGISTER_FAIL')
@@ -69,9 +74,13 @@ export const register = ({ name, email, password, confirmPassword }) => async di
         });
     }
 };
-// Login User
+
+// @route   GET api/users/login
+// @desc    Login User / Returning JWT Token
+// @access  Public
 export const login = ({ email, password }) => async dispatch => {
-    // Headers
+    console.log(email, password, "krok 1");
+
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -81,51 +90,124 @@ export const login = ({ email, password }) => async dispatch => {
     // Request body
     const body = JSON.stringify({ email, password });
 
+    // dispatch({
+    //     type: REGISTER_LOADING
+    // })
+
+    dispatch({
+        type: LOGIN_SUCCESS,
+        payload: '123'
+    })
     try {
         const res = await axios.post('http://localhost:8000/api/users/login', body, config);
+        console.log(res, 'response data z auth actions :)');
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: res.data
+            payload: res
         })
-    } catch (err) {
-        dispatch(
-            returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL')
-        );
         dispatch({
-            type: LOGIN_FAIL
-        });
+            type: CLOSE_LOGIN_MODAL,
+        })
+
+    } catch (err) {
+        console.log(err, 'message bledy z auth login actions');
+
+        dispatch(
+            returnErrors(err, err.response.status, 'REGISTER_FAIL')
+        );
+        // dispatch({
+        //     type: REGISTER_FAIL
+        // });
     }
-};
 
-// // Login User
-// export const login = ({ email, password }) => dispatch => {
-//   // Headers
-//   const config = {
-//     headers: {
-//       'Content-Type': 'application/json'
+
+
+    // dispatch({
+    //     type: LOGIN_SUCCESS,
+    //     payload: 'test payload'
+    // })
+
+}
+
+// export const login = ((req, res) => {
+//     const { errors, isValid } = validateLoginInput(req.body);
+
+//     // Check Validation
+//     if (!isValid) {
+//         return res.status(400).json(errors);
 //     }
-//   };
 
-//   // Request body
-//   const body = JSON.stringify({ email, password });
+//     const email = req.body.email;
+//     const password = req.body.password;
 
-//   axios
-//     .post('/api/auth', body, config)
-//     .then(res =>
-//       dispatch({
-//         type: LOGIN_SUCCESS,
-//         payload: res.data
-//       })
-//     )
-//     .catch(err => {
-//       dispatch(
-//         returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL')
-//       );
-//       dispatch({
-//         type: LOGIN_FAIL
-//       });
+//     // Find user by email
+//     User.findOne({ email }).then(user => {
+//         // Check for user
+//         if (!user) {
+//             errors.email = 'User not found';
+//             return res.status(404).json(errors);
+//         }
+
+//         // Check Password
+//         bcrypt.compare(password, user.password).then(isMatch => {
+//             if (isMatch) {
+//                 // User Matched
+//                 const payload = { id: user.id, name: user.name, avatar: user.avatar }; // Create JWT Payload
+
+//                 // Sign Token
+//                 jwt.sign(
+//                     payload,
+//                     keys.secretOrKey,
+//                     { expiresIn: 3600 },
+//                     (err, token) => {
+//                         res.json({
+//                             success: true,
+//                             token: 'Bearer ' + token
+//                         });
+//                     }
+//                 );
+//             } else {
+//                 errors.password = 'Password incorrect';
+//                 return res.status(400).json(errors);
+//             }
+//         });
 //     });
+// }
+
+// Login User
+// export const login = ({ email, password }) => async dispatch => {
+//     console.warn(email, password, 'z akcji logowania')
+
+//     // Headers
+//     const config = {
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }
+//     };
+
+//     // Request body
+//     const body = JSON.stringify({ email, password });
+
+//     try {
+//         const res = await axios.post('http://localhost:8000/api/users/login', body, config);
+
+//         dispatch({
+//             type: LOGIN_SUCCESS,
+//             payload: res.data
+//         })
+//     } catch (err) {
+//         dispatch(
+//             returnErrors(err, err.response.status, 'LOGIN_FAIL')
+//         );
+//         dispatch({
+//             type: LOGIN_FAIL
+//         });
+//     }
 // };
+
+//x
+
+//x
 
 // // Logout User
 // export const logout = () => {
@@ -152,4 +234,4 @@ export const login = ({ email, password }) => async dispatch => {
 //   }
 
 //   return config;
-// };
+// }

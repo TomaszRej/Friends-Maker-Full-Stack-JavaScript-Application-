@@ -9,7 +9,7 @@ import { openLoginModal, openRegisterModal}  from '../actions/layoutActions';
 class MainMenu extends Component {
   state = {
     redirect: '',
-    activeItem: 'home',
+    activeItem: '',
     loginModalOpen: false,
     registerModalOpen: false
   }
@@ -22,9 +22,9 @@ class MainMenu extends Component {
 
     //name === 'register' && this.setState({ registerModalOpen: true })
     
-    name === 'home' && this.setState({ redirect: '/' })
-    this.setState({ activeItem: name })
+    name === 'home' && this.setState({ activeItem: name });
   }
+  
 
   handleCloseLoginModal = () => this.setState({ loginModalOpen: false })
   handleCloseRegisterModal = () => this.setState({ registerModalOpen: false })
@@ -43,7 +43,7 @@ class MainMenu extends Component {
     })
   }
 
- 
+  
 
   render() {
     const { activeItem, redirect } = this.state

@@ -1,4 +1,4 @@
-import { OPEN_LOGIN_MODAL, CLOSE_LOGIN_MODAL, OPEN_REGISTER_MODAL, CLOSE_REGISTER_MODAL, TEST  } from './types';
+import { OPEN_LOGIN_MODAL, CLOSE_LOGIN_MODAL, OPEN_REGISTER_MODAL, CLOSE_REGISTER_MODAL } from './types';
 
 // OPEN LOGIN MODAL
 export const openLoginModal = () => {
@@ -15,15 +15,12 @@ export const closeLoginModal = () => {
     };
 };
 
-
-// export const openRegisterModal = () => dispatch => {
-
-//         dispatch({
-//           type: OPEN_REGISTER_MODAL,
-
-//         })
-      
-//   };
+//OPEN REGISTER MODAL
+export const openRegisterModal = () => {
+    return {
+        type: OPEN_REGISTER_MODAL
+    };
+};
 
 // CLOSE REGISTER MODAL
 export const closeRegisterModal = () => {
@@ -32,9 +29,3 @@ export const closeRegisterModal = () => {
     };
 };
 
-//OPEN REGISTER MODAL
-export const openRegisterModal = () => {
-    return {
-        type: OPEN_REGISTER_MODAL
-    };
-};

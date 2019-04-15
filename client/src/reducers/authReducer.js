@@ -2,12 +2,13 @@ import {
   USER_LOADED,
   USER_LOADING,
   // AUTH_ERROR,
-  // LOGIN_SUCCESS,
-  // LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
   // LOGOUT_SUCCESS,
   REGISTER_LOADING,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+
 } from '../actions/types';
 
 
@@ -20,19 +21,19 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case USER_LOADING:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case USER_LOADED:
-      return {
-        ...state,
-        isAuthenticated: true,
-        isLoading: false,
-        user: action.payload
-      };
-    // case LOGIN_SUCCESS:
+    // case USER_LOADING:
+    //   return {
+    //     ...state,
+    //     isLoading: true
+    //   };
+    // case USER_LOADED:
+    //   return {
+    //     ...state,
+    //     isAuthenticated: true,
+    //     isLoading: false,
+    //     user: action.payload
+    //   };
+   
     case REGISTER_LOADING:
       return {
         ...state,
@@ -43,11 +44,28 @@ export default function (state = initialState, action) {
       return {
         ...state,
         ...action.payload,
-        isAuthenticated: true,
+        //isAuthenticated: true,
         isLoading: false
       };
     // case AUTH_ERROR:
+     // case LOGIN_SUCCESS:
+     case LOGIN_SUCCESS: 
+     return {
+      ...state,
+      token: action.payload.token,
+      user: action.payload,
+      isAuthenticated: true,
+      isLoading: false
+     }
     // case LOGIN_FAIL:
+    case LOGIN_FAIL: 
+    return {
+      ...state,
+      token: null,
+      user: null,
+      isAuthenticated: false,
+      isLoading: false
+    }
     // case LOGOUT_SUCCESS:
     case REGISTER_FAIL:
       //localStorage.removeItem('token');
@@ -55,7 +73,7 @@ export default function (state = initialState, action) {
         ...state,
         token: null,
         user: null,
-        isAuthenticated: false,
+        //isAuthenticated: false,
         isLoading: false
       };
     default:

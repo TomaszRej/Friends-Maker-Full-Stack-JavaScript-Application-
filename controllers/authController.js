@@ -1,9 +1,12 @@
 //const { validationResult } = require('express-validator/check');
 const bcrypt = require('bcryptjs');
 
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+
 validateRegisterInput = require('../validation/register')
 validateLoginInput = require('../validation/login');
+
 exports.registerUser = async (req, res, next) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -19,9 +22,9 @@ exports.registerUser = async (req, res, next) => {
   try {
     // checking if user exist
     const user = await User.findOne({ email })
-    console.log(user,'user')
+    console.log(user, 'user')
 
-    if (user !== null ) return res.status(400).json({ message: 'User with this email address already exist' });
+    if (user !== null) return res.status(400).json({ message: 'User with this email address already exist' });
 
     const hashedPw = await bcrypt.hash(password, 12);
     const newUser = new User({ name, email, password: hashedPw });
@@ -36,60 +39,104 @@ exports.registerUser = async (req, res, next) => {
 }
 
 exports.loginUser = async (req, res, next) => {
-  const { errors, isValid } = validateLoginInput(req.body);
-
-  // Check Validation
-  if (!isValid) {
-    return res.status(400).json({ "message": errors });
-  }
-
-
-
-  const email = req.body.email;
-  const password = req.body.password;
-
-  // Find user by email
-  try {
-  User.findOne({ email }).then(user => {
-    // Check for user
-    if (!user) {
-      errors.email = 'User not found';
-      return res.status(404).json(errors);
-    } else {
-      console.log(user,'user');
-      
-    }
-    
-
-    // // Check Password
-    // bcrypt.compare(password, user.password).then(isMatch => {
-    //   if (isMatch) {
-    //     // User Matched
-    //     const payload = { id: user.id, name: user.name, avatar: user.avatar }; // Create JWT Payload
-
-    //     // Sign Token
-    //     jwt.sign(
-    //       payload,
-    //       keys.secretOrKey,
-    //       { expiresIn: 3600 },
-    //       (err, token) => {
-    //         res.json({
-    //           success: true,
-    //           token: 'Bearer ' + token
-    //         });
-    //       }
-    //     );
-    //   } else {
-    //     errors.password = 'Password incorrect';
-    //     return res.status(400).json(errors);
-    //   }
-     });
-
-  } catch (er)  {
-
-  }
+  const { email, password } = req.body;
   
-}
+  try {
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+      const error = new Error('A user with this email could not be found.');
+      error.statusCode = 401;
+      throw error;
+    }
+
+    //loadedUser = user;
+    const isEqual = await bcrypt.compare(password, user.password);
+    if (!isEqual) {
+      const error = new Error('Wrong password!');
+      error.statusCode = 401;
+      throw error;
+    }
+    const token = jwt.sign(
+      {
+        email: user.email,
+        userId: user._id.toString()
+      },
+      'somesupersecretsecret',
+      { expiresIn: '1h' }
+    );
+    res.status(200).json({ token: token, userId: user._id.toString() });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
+// exports.loginUser = async (req, res, next) => {
+//   console.log('loginUser controller !!!!');
+
+
+//   const { errors, isValid } = validateLoginInput(req.body);
+//   console.log(errors, 'errors');
+//   console.log(isValid, 'isValid')
+//   // Check Validation
+//   if (!isValid) {
+//     return res.status(400).json({ "message": errors });
+//   }
+
+
+
+//   const email = req.body.email;
+//   const password = req.body.password;
+
+//   // Find user by email
+//   try {
+//     const user = User.findOne({ email });
+//     // Check for user
+//     if (!user) {
+//       errors.email = 'User not found';
+//       return res.status(404).json(errors);
+//     } else {
+//       console.log('jest user :) 2222');
+
+//       console.log(user, 'user');
+//       return res.status(200).json(user);
+
+//     }
+
+
+//     // // Check Password
+//     // bcrypt.compare(password, user.password).then(isMatch => {
+//     //   if (isMatch) {
+//     //     // User Matched
+//     //     const payload = { id: user.id, name: user.name, avatar: user.avatar }; // Create JWT Payload
+
+//     //     // Sign Token
+//     //     jwt.sign(
+//     //       payload,
+//     //       keys.secretOrKey,
+//     //       { expiresIn: 3600 },
+//     //       (err, token) => {
+//     //         res.json({
+//     //           success: true,
+//     //           token: 'Bearer ' + token
+//     //         });
+//     //       }
+//     //     );
+//     //   } else {
+//     //     errors.password = 'Password incorrect';
+//     //     return res.status(400).json(errors);
+//     //   }
+
+
+//   } catch (err) {
+//     console.warn(err);
+
+//   }
+
+// }
 
 // exports.postUser = async (req, res, next) => {
 //   console.log('post route');

@@ -103,6 +103,7 @@ class LoginModal extends Component {
     render() {
         const { loginModalOpened, closeLoginModal } = this.props;
         
+        console.warn(this.props.errors, "errors loginError LOGIN MODAL");
         return (
             <Modal size='tiny' open={loginModalOpened}
                 centered={false}
@@ -120,7 +121,7 @@ class LoginModal extends Component {
 const mapStateToProps = state => {
     return {
         isLoading: state.auth.isLoading,
-        error: state.error,
+        error: state.loginError,
         isAuthanticated: state.auth.isAuthanticated,
         loginModalOpened: state.layout.loginModalOpened
     }

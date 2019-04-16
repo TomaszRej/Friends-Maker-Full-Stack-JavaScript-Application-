@@ -11,6 +11,8 @@ router.post('/', authController.registerUser);
 
 router.post('/login', authController.loginUser);
 
+router.get('/', authController.getUsers)
+
 
 //(req, res) => {
 //   const { email, password } = req.body;

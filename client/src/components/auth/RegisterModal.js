@@ -138,7 +138,7 @@ const mapStateToProps = state => ({
     registerModalOpened: state.layout.registerModalOpened,
     isLoading: state.auth.isLoading,
     isAuthenticated: state.auth.isAuthenticated,
-    error: state.error
+    error: state.registerError
 });
 
 

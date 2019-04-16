@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { returnErrors, clearErrors } from './errorActions';
+import { returnErrors, clearErrors} from './errorActions';
+
+import { returnLoginErrors } from './loginErrorActions';
 
 import {
     //   USER_LOADED,
@@ -68,6 +70,7 @@ export const register = ({ name, email, password, confirmPassword }) => async di
         dispatch({
             type: CLOSE_REGISTER_MODAL
         })
+       
     } catch (err) {
         dispatch(
             returnErrors(err, err.response.status, 'REGISTER_FAIL')
@@ -76,6 +79,8 @@ export const register = ({ name, email, password, confirmPassword }) => async di
             type: REGISTER_FAIL
         });
     }
+
+   
 };
 
 // @route   GET api/users/login
@@ -115,7 +120,7 @@ export const login = ({ email, password }) => async dispatch => {
         console.log(err, 'message bledy z auth login actions');
 
         dispatch(
-            returnErrors(err, err.response.status, 'REGISTER_FAIL')
+            returnLoginErrors(err, err.response.status, 'REGISTER_FAIL')
         );
         dispatch({
             type: LOGIN_FAIL

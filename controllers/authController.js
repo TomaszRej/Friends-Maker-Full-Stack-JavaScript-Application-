@@ -7,6 +7,21 @@ const User = require('../models/User');
 validateRegisterInput = require('../validation/register')
 validateLoginInput = require('../validation/login');
 
+exports.getUsers = async (req, res, next) => {
+
+  console.log('getUsers')
+  try {
+    const users = await User.find();
+    res.status(200).json({ users: users })
+
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+}
+
 exports.registerUser = async (req, res, next) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -40,7 +55,7 @@ exports.registerUser = async (req, res, next) => {
 
 exports.loginUser = async (req, res, next) => {
   const { email, password } = req.body;
-  
+
   try {
     const user = await User.findOne({ email: email });
 

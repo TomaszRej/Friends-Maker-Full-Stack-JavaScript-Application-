@@ -1,27 +1,33 @@
 import React from 'react'
-import { Image, List } from 'semantic-ui-react'
+import { Image, List, Button } from 'semantic-ui-react'
+import { connect } from 'react-redux';
+import { getUsers } from '../actions/userActions';
 
-const UsersList = () => (
-  <List selection verticalAlign='middle'>
-    <List.Item active>
-      <Image avatar src='https://react.semantic-ui.com/images/avatar/small/helen.jpg' />
-      <List.Content>
-        <List.Header>Helen</List.Header>
-      </List.Content>
-    </List.Item>
-    <List.Item>
-      <Image avatar src='https://react.semantic-ui.com/images/avatar/small/christian.jpg' />
-      <List.Content>
-        <List.Header>Christian</List.Header>
-      </List.Content>
-    </List.Item>
-    <List.Item>
-      <Image avatar src='https://react.semantic-ui.com/images/avatar/small/daniel.jpg' />
-      <List.Content>
-        <List.Header>Daniel</List.Header>
-      </List.Content>
-    </List.Item>
-  </List>
-)
+class UsersList extends React.Component {
 
-export default UsersList
+  render() {
+    return (
+      this.props.users.map(user => {
+        return (
+          <List selection verticalAlign='middle'>
+            <List.Item active>
+              <Image avatar src='https://react.semantic-ui.com/images/avatar/small/helen.jpg' />
+              <List.Content>
+                <List.Header>{user.name}</List.Header>
+              </List.Content>
+            </List.Item>
+          </List>
+        )
+      })
+    )
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    users: state.users.users
+  }
+}
+
+
+export default connect(mapStateToProps, { getUsers })(UsersList);

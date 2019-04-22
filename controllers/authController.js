@@ -3,13 +3,14 @@ const bcrypt = require('bcryptjs');
 
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const config = require('config');
 
 validateRegisterInput = require('../validation/register')
 validateLoginInput = require('../validation/login');
 
 exports.getUsers = async (req, res, next) => {
 
-  console.log('getUsers')
+  //console.log(req.userId, 'decodedddd')
   try {
     const users = await User.find();
     res.status(200).json({ users: users })
@@ -77,7 +78,7 @@ exports.loginUser = async (req, res, next) => {
         email: user.email,
         userId: user._id.toString()
       },
-      'somesupersecretsecret',
+      'mojJSONwebTokenVerySecret',
       { expiresIn: '1h' }
     );
     res.status(200).json({ token: token, userId: user._id.toString(), user: user });

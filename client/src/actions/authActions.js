@@ -2,9 +2,11 @@ import axios from 'axios';
 import { returnErrors, clearErrors} from './errorActions';
 
 import { returnLoginErrors } from './loginErrorActions';
+import {getUsers } from './userActions';
+
 
 import {
-    //   USER_LOADED,
+       USERS_LOADED,
     //   USER_LOADING,
     //   AUTH_ERROR,
     LOGIN_LOADING,
@@ -110,11 +112,14 @@ export const login = ({ email, password }) => async dispatch => {
         console.log(res, 'response data z auth actions :)');
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: res.data.user
+            //token: res.data.token,
+            payload: {user: res.data.user, token: res.data.token}
         })
+        dispatch(getUsers())
         dispatch({
             type: CLOSE_LOGIN_MODAL,
         })
+ 
 
     } catch (err) {
         console.log(err, 'message bledy z auth login actions');
@@ -130,110 +135,18 @@ export const login = ({ email, password }) => async dispatch => {
 }
 
 // // Logout User
-export const logout = () => {
-  return {
-    type: LOGOUT_SUCCESS
-  };
-};
-
-// export const login = ((req, res) => {
-//     const { errors, isValid } = validateLoginInput(req.body);
-
-//     // Check Validation
-//     if (!isValid) {
-//         return res.status(400).json(errors);
-//     }
-
-//     const email = req.body.email;
-//     const password = req.body.password;
-
-//     // Find user by email
-//     User.findOne({ email }).then(user => {
-//         // Check for user
-//         if (!user) {
-//             errors.email = 'User not found';
-//             return res.status(404).json(errors);
-//         }
-
-//         // Check Password
-//         bcrypt.compare(password, user.password).then(isMatch => {
-//             if (isMatch) {
-//                 // User Matched
-//                 const payload = { id: user.id, name: user.name, avatar: user.avatar }; // Create JWT Payload
-
-//                 // Sign Token
-//                 jwt.sign(
-//                     payload,
-//                     keys.secretOrKey,
-//                     { expiresIn: 3600 },
-//                     (err, token) => {
-//                         res.json({
-//                             success: true,
-//                             token: 'Bearer ' + token
-//                         });
-//                     }
-//                 );
-//             } else {
-//                 errors.password = 'Password incorrect';
-//                 return res.status(400).json(errors);
-//             }
-//         });
-//     });
-// }
-
-// Login User
-// export const login = ({ email, password }) => async dispatch => {
-//     console.warn(email, password, 'z akcji logowania')
-
-//     // Headers
-//     const config = {
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     };
-
-//     // Request body
-//     const body = JSON.stringify({ email, password });
-
-//     try {
-//         const res = await axios.post('http://localhost:8000/api/users/login', body, config);
-
-//         dispatch({
-//             type: LOGIN_SUCCESS,
-//             payload: res.data
-//         })
-//     } catch (err) {
-//         dispatch(
-//             returnErrors(err, err.response.status, 'LOGIN_FAIL')
-//         );
-//         dispatch({
-//             type: LOGIN_FAIL
-//         });
-//     }
+// export const logout = () => {
+//   return {
+//     type: LOGOUT_SUCCESS
+//   };
 // };
 
-//x
-
-//x
-
-
-
-// // Setup config/headers and token
-// export const tokenConfig = getState => {
-//   // Get token from localstorage
-//   const token = getState().auth.token;
-
-//   // Headers
-//   const config = {
-//     headers: {
-//       'Content-type': 'application/json'
-//     }
-//   };
-
-//   // If token, add to headers
-//   if (token) {
-//     config.headers['x-auth-token'] = token;
-//   }
-
-//   return config;
-// }
+export const logout = () =>  dispatch => {
+    dispatch({
+        type: LOGOUT_SUCCESS
+    });
+    dispatch({
+        type: USERS_LOADED,
+        payload: []
+    });
+}

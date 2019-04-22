@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { openLoginModal, closeLoginModal } from '../../actions/layoutActions';
 import { connect } from 'react-redux';
 import { login } from '../../actions/authActions';
-
+import {getUsers} from '../../actions/userActions';
 
 class LoginModal extends Component {
     state = {
@@ -28,6 +28,7 @@ class LoginModal extends Component {
                 this.setState({ message: error.message.response.data.message });
             } else {
                 this.setState({ message: null });
+         
 
             }
         }
@@ -48,7 +49,9 @@ class LoginModal extends Component {
         login(loginData)
 
         if (isAuthanticated) {
+            this.props.getUsers();
             closeLoginModal();
+        
         }
 
 
@@ -127,4 +130,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { login, openLoginModal, closeLoginModal })(LoginModal);
+export default connect(mapStateToProps, { login, openLoginModal, closeLoginModal ,getUsers})(LoginModal);

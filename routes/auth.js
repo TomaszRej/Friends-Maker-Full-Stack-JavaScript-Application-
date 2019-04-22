@@ -4,6 +4,8 @@ const router = express.Router();
 const User = require('../models/User');
 const authController = require('../controllers/authController')
 
+const isAuth = require('../middleware/isAuth');
+
 // @route   POST api/auth
 // @desc    Auth user
 // @access  Public
@@ -11,7 +13,7 @@ router.post('/', authController.registerUser);
 
 router.post('/login', authController.loginUser);
 
-router.get('/', authController.getUsers)
+router.get('/',isAuth, authController.getUsers)
 
 
 //(req, res) => {

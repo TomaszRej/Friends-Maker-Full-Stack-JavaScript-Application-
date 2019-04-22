@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Icon } from 'semantic-ui-react'
 import LoginModal from './auth/LoginModal';
 import RegisterModal from './auth/RegisterModal';
 import { Redirect } from 'react-router-dom';
@@ -61,6 +61,10 @@ class MainMenu extends Component {
           {user
             ?
             <Menu.Menu position='right'>
+              <Menu.Item>
+                <Icon circular name="user" />
+                <span>{this.props.user.name}</span>
+              </Menu.Item>
               <Menu.Item
                 name='logout'
                 active={activeItem === 'logout'}

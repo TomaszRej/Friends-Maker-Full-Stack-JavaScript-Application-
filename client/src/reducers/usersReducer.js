@@ -19,7 +19,7 @@ import {
         return {
           ...state,
           isLoading: false,
-          user: action.payload
+          users: action.payload
         };
       default:
         return state;

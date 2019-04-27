@@ -10,7 +10,7 @@ validateRegisterInput = require('../validation/register')
 validateLoginInput = require('../validation/login');
 
 exports.getUsers = async (req, res, next) => {
-
+  console.log(req.userId, 'req.userId z decodedddd')
   //console.log(req.userId, 'decodedddd')
   try {
     const users = await User.find();
@@ -26,6 +26,8 @@ exports.getUsers = async (req, res, next) => {
 
 exports.registerUser = async (req, res, next) => {
   const { errors, isValid } = validateRegisterInput(req.body);
+
+
 
   // Check Validation
   if (!isValid) {

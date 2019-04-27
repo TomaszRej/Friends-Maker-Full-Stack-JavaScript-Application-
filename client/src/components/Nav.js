@@ -51,8 +51,8 @@ class MainMenu extends Component {
 
   render() {
     const { activeItem, redirect } = this.state
-    const { loginModalOpened, registerModalOpened,forgotPasswordOpen, user } = this.props;
-    console.warn(registerModalOpened, 'regModOpe');
+    const { loginModalOpened, registerModalOpened,forgotPasswordOpened, user } = this.props;
+    console.warn(this.props.user, 'user NAV !!!!!!!!!!!!!!!!!!');
 
     // if (redirect !== '') {
     //   return <Redirect to={redirect} />

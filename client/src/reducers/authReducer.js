@@ -18,7 +18,7 @@ const initialState = {
   token: '',
   isAuthenticated: null,
   isLoading: false,
-  user: null
+  user: JSON.parse(localStorage.getItem('user'))
 };
 
 export default function (state = initialState, action) {
@@ -77,6 +77,7 @@ export default function (state = initialState, action) {
     // case LOGOUT_SUCCESS:
     case LOGOUT_SUCCESS:
     localStorage.setItem('token',null);
+    localStorage.removeItem('user');
       return {
         ...state,
         token: null,

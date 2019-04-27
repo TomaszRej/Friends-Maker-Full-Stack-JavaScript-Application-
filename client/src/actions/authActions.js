@@ -109,7 +109,7 @@ export const login = ({ email, password }) => async dispatch => {
 
     try {
         const res = await axios.post('http://localhost:8000/api/users/login', body, config);
-        console.log(res, 'response data z auth actions :)');
+        console.log(res.data.token, 'response data z auth actions :)');
         dispatch({
             type: LOGIN_SUCCESS,
             //token: res.data.token,
@@ -119,6 +119,10 @@ export const login = ({ email, password }) => async dispatch => {
         dispatch({
             type: CLOSE_LOGIN_MODAL,
         })
+
+        const user = JSON.stringify(res.data.user);
+
+        localStorage.setItem('user', user,)
  
 
     } catch (err) {

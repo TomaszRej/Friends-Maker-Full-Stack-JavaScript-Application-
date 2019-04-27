@@ -24,7 +24,7 @@ export const getUsers = () => async (dispatch, getState) => {
 
     try {
         const res = await axios.get('http://localhost:8000/api/users/', tokenConfig(getState));
-        console.log('2', res.data)
+        console.log('22222', res.data)
         dispatch({
             type: USERS_LOADED,
             payload: res.data.users

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Button, Modal, Checkbox, Form, Message, Grid, Segment, Dimmer, Loader } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
-import { openLoginModal, closeLoginModal } from '../../actions/layoutActions';
+import { openLoginModal, closeLoginModal, openForgotPasswordModal } from '../../actions/layoutActions';
 import { connect } from 'react-redux';
 import { login } from '../../actions/authActions';
-import {getUsers} from '../../actions/userActions';
+import { getUsers } from '../../actions/userActions';
 
 class LoginModal extends Component {
     state = {
@@ -28,7 +28,7 @@ class LoginModal extends Component {
                 this.setState({ message: error.message.response.data.message });
             } else {
                 this.setState({ message: null });
-         
+
 
             }
         }
@@ -51,10 +51,20 @@ class LoginModal extends Component {
         if (isAuthanticated) {
             this.props.getUsers();
             closeLoginModal();
-        
+
         }
 
 
+
+    }
+
+    handleClickOnLink = () => {
+        console.log('test onLink');
+
+        const { closeLoginModal, openForgotPasswordModal } = this.props;
+
+        closeLoginModal();
+        openForgotPasswordModal();
 
     }
 
@@ -77,8 +87,8 @@ class LoginModal extends Component {
 
     }
     renderModalContent = () => {
-         const { email, password} = this.state;
-         const { isLoading } = this.props;
+        const { email, password } = this.state;
+        const { isLoading } = this.props;
         const content = isLoading ?
             <Segment style={{ height: '300px' }}>
                 <Dimmer active>
@@ -96,7 +106,8 @@ class LoginModal extends Component {
                 </Form.Field>
                 <Form.Field style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Checkbox label='Remember me' />
-                    <Link to='/forgot-password' className='link'>Forgot your password?</Link>
+                    <a style={{ cursor: 'pointer' }} onClick={this.handleClickOnLink}>Forgot your password</a>
+                    {/* <Link to='/forgot-password' className='link'>Forgot your password?</Link> */}
                 </Form.Field>
                 <Button color='orange' fluid type='submit'>Submit</Button>
             </Form>
@@ -105,7 +116,7 @@ class LoginModal extends Component {
     }
     render() {
         const { loginModalOpened, closeLoginModal } = this.props;
-        
+
         console.warn(this.props.errors, "errors loginError LOGIN MODAL");
         return (
             <Modal size='tiny' open={loginModalOpened}
@@ -130,4 +141,11 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { login, openLoginModal, closeLoginModal ,getUsers})(LoginModal);
+export default connect(mapStateToProps,
+    {
+        login,
+        openLoginModal,
+        closeLoginModal,
+        getUsers,
+        openForgotPasswordModal
+    })(LoginModal);

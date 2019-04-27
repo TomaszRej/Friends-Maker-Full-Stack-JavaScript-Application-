@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const config = require('config');
+const io = require('../socket');
 
 validateRegisterInput = require('../validation/register')
 validateLoginInput = require('../validation/login');
@@ -45,6 +46,8 @@ exports.registerUser = async (req, res, next) => {
     const hashedPw = await bcrypt.hash(password, 12);
     const newUser = new User({ name, email, password: hashedPw });
     const result = await newUser.save();
+
+    io.getIO().emit('users', {action: 'create', user: newUser})
     res.status(201).json({ message: "User created!", userId: result._id })
   } catch (err) {
     if (!err.statusCode) {

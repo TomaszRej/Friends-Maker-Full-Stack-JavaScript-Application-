@@ -1,4 +1,4 @@
-import { OPEN_LOGIN_MODAL, CLOSE_LOGIN_MODAL, OPEN_REGISTER_MODAL, CLOSE_REGISTER_MODAL } from './types';
+import { OPEN_LOGIN_MODAL, CLOSE_LOGIN_MODAL, OPEN_REGISTER_MODAL, CLOSE_REGISTER_MODAL,CLOSE_FORGOT_PASSWORD_MODAL,OPEN_FORGOT_PASSWORD_MODAL  } from './types';
 
 // OPEN LOGIN MODAL
 export const openLoginModal = () => {
@@ -28,4 +28,23 @@ export const closeRegisterModal = () => {
         type: CLOSE_REGISTER_MODAL
     };
 };
+
+//OPEN FORGOT_PASSWORD MODAL
+export const openForgotPasswordModal = () => {
+    return {
+        type: OPEN_FORGOT_PASSWORD_MODAL
+    };
+};
+
+// CLOSE FORGOT_PASSWORD MODAL
+export const closeForgotPasswordModal = () => {
+    return {
+        type: CLOSE_FORGOT_PASSWORD_MODAL
+    };
+};
+
+
+
+
+
 

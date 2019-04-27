@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Menu, Icon } from 'semantic-ui-react'
 import LoginModal from './auth/LoginModal';
 import RegisterModal from './auth/RegisterModal';
+import ForgotPasswordModal from './auth/ForgotPasswordModal';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { openLoginModal, openRegisterModal } from '../actions/layoutActions';
@@ -12,7 +13,8 @@ class MainMenu extends Component {
     // redirect: '',
     activeItem: '',
     loginModalOpen: false,
-    registerModalOpen: false
+    registerModalOpen: false,
+    forgotPasswordOpen: false
   }
 
   handleItemClick = (e, { name }) => {
@@ -49,7 +51,7 @@ class MainMenu extends Component {
 
   render() {
     const { activeItem, redirect } = this.state
-    const { loginModalOpened, registerModalOpened, user } = this.props;
+    const { loginModalOpened, registerModalOpened,forgotPasswordOpen, user } = this.props;
     console.warn(registerModalOpened, 'regModOpe');
 
     // if (redirect !== '') {
@@ -85,18 +87,19 @@ class MainMenu extends Component {
               />
             </Menu.Menu>
           }
-
-
-
-
-
         </Menu>
-        <LoginModal modalOpen={loginModalOpened} //handleCloseLoginModal={this.handleCloseLoginModal} />
+        <LoginModal
+          modalOpen={loginModalOpened}
         />
-        <RegisterModal modalOpen={registerModalOpened}
-          // handleCloseRegisterModal={this.handleCloseRegisterModal} 
+        <RegisterModal
+          modalOpen={registerModalOpened}
           handleOpenLoginModal={this.handleOpenLoginModal}
         />
+        <ForgotPasswordModal
+          modalOpen={true}
+        />
+
+
 
 
         {/* <RegisterModal  modalOpen={this.state.registerModalOpen} handleCloseRegisterModal={this.handleCloseRegisterModal} handleOpenLoginModal={this.handleOpenLoginModal} />  */}

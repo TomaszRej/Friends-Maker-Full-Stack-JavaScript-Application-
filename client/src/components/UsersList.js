@@ -2,8 +2,21 @@ import React from 'react'
 import { Image, List, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import { getUsers } from '../actions/userActions';
+import openSocket from 'socket.io-client';
+
 
 class UsersList extends React.Component {
+  // constructor(props){
+  //   super(props);
+
+  //   this.state = {
+  //     users: []
+  //   }
+  // }
+  componentDidUpdate(){
+   // getUsers();
+  }
+
 
   render() {
     return (

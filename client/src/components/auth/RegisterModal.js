@@ -88,6 +88,7 @@ class RegisterModal extends Component {
     renderModalContent = () => {
         const { name, email, password, confirmPassword } = this.state;
         const { isLoading } = this.props;
+        
         const content = isLoading ?
             <Segment style={{ height: '300px' }}>
                 <Dimmer active>

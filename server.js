@@ -8,15 +8,7 @@ const app = express();
 
 app.use(express.json());
 
-const db = config.get('mongoURI');
 
-mongoose
-  .connect(db, {
-    useNewUrlParser: true,
-    useCreateIndex: true
-  })
-  .then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.log(err));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -42,6 +34,27 @@ app.use((error, req, res, next) => {
 // })
 
 
-const port =  8000;
 
-app.listen(port, () => console.log(`Server started on port ${port}`));
+
+const db = config.get('mongoURI');
+
+mongoose
+  .connect(db, {
+    useNewUrlParser: true,
+    useCreateIndex: true
+  })
+  .then(() => {
+    console.log('MongoDB Connected...')
+    const port =  8000;
+    const server = app.listen(port, () => console.log(`Server started on port ${port}`));
+    const io = require('./socket').init(server);
+
+    io.on('connection', socket => {
+      console.log('Client connected');
+      
+    })
+
+  })
+  .catch(err => console.log(err));
+
+

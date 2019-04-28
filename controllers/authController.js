@@ -49,7 +49,7 @@ exports.registerUser = async (req, res, next) => {
     const newUser = new User({ name, email, password: hashedPw });
     const result = await newUser.save();
 
-    io.getIO().emit('users', {action: 'create', user: newUser})
+    io.getIO().emit('users', { action: 'create', user: newUser })
     res.status(201).json({ message: "User created!", userId: result._id })
   } catch (err) {
     if (!err.statusCode) {
@@ -86,6 +86,17 @@ exports.loginUser = async (req, res, next) => {
       'mojJSONwebTokenVerySecret',
       { expiresIn: '1h' }
     );
+
+    // ++
+    const decodedToken = jwt.verify(token, config.get('jwtSecret'));
+    console.log(decodedToken, 'decoded token na backendzie ')
+    const decodedExp = decodedToken.exp - decodedToken.iat;
+    const seconds = new Date().getTime() / 1000;
+    const fromNow = decodedToken.exp - seconds;
+    console.log(decodedExp, seconds, fromNow, 'decoded Exp na backendzie ')
+
+    // --
+
     res.status(200).json({ token: token, userId: user._id.toString(), user: user });
   } catch (err) {
     if (!err.statusCode) {

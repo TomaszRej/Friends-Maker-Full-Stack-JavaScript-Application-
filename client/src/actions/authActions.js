@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { returnErrors, clearErrors} from './errorActions';
+import { returnErrors, clearErrors } from './errorActions';
 
 import { returnLoginErrors } from './loginErrorActions';
-import {getUsers } from './userActions';
-
+import { getUsers } from './userActions';
+import {getPosts} from './postActions';
 
 import {
-       USERS_LOADED,
+    USERS_LOADED,
     //   USER_LOADING,
     //   AUTH_ERROR,
     LOGIN_LOADING,
@@ -54,7 +54,7 @@ export const register = ({ name, email, password, confirmPassword }) => async di
     // Request body
     const body = JSON.stringify({ name, email, password, confirmPassword });
 
-   
+
 
     dispatch({
         type: REGISTER_LOADING
@@ -72,7 +72,7 @@ export const register = ({ name, email, password, confirmPassword }) => async di
         dispatch({
             type: CLOSE_REGISTER_MODAL
         })
-       
+
     } catch (err) {
         dispatch(
             returnErrors(err, err.response.status, 'REGISTER_FAIL')
@@ -82,13 +82,13 @@ export const register = ({ name, email, password, confirmPassword }) => async di
         });
     }
 
-   
+
 };
 
 // @route   GET api/users/login
 // @desc    Login User / Returning JWT Token
 // @access  Public
-export const login = ({ email, password }) => async dispatch => {
+export const login = ({ email, password }, rememberMe) => async dispatch => {
     console.log(email, password, "krok 1");
 
     const config = {
@@ -100,11 +100,8 @@ export const login = ({ email, password }) => async dispatch => {
     // Request body
     const body = JSON.stringify({ email, password });
 
-   
-
     dispatch({
         type: LOGIN_LOADING,
-    
     })
 
     try {
@@ -113,17 +110,20 @@ export const login = ({ email, password }) => async dispatch => {
         dispatch({
             type: LOGIN_SUCCESS,
             //token: res.data.token,
-            payload: {user: res.data.user, token: res.data.token}
+            payload: { user: res.data.user, token: res.data.token }
         })
         dispatch(getUsers())
+        dispatch(getPosts())
         dispatch({
             type: CLOSE_LOGIN_MODAL,
         })
 
-        const user = JSON.stringify(res.data.user);
+        if (rememberMe) {
+            const user = JSON.stringify(res.data.user);
+            localStorage.setItem('user', user)
+            localStorage.setItem('token', res.data.token)
+        }
 
-        localStorage.setItem('user', user,)
- 
 
     } catch (err) {
         console.log(err, 'message bledy z auth login actions');
@@ -145,7 +145,7 @@ export const login = ({ email, password }) => async dispatch => {
 //   };
 // };
 
-export const logout = () =>  dispatch => {
+export const logout = () => dispatch => {
     dispatch({
         type: LOGOUT_SUCCESS
     });

@@ -2,7 +2,11 @@ const express = require('express');
 const path = require('path');
 const config = require('config');
 const mongoose = require('mongoose');
+
 const authRoutes = require('./routes/auth');
+const postRoutes = require('./routes/post');
+
+
 
 const app = express();
 
@@ -20,7 +24,18 @@ app.use((req, res, next) => {
   next();
 });
 
+
+
+
+
+
 app.use('/api/users', authRoutes);
+app.use('/api/posts', postRoutes);
+
+
+
+
+
 
 app.use((error, req, res, next) => {
   console.warn(error, 'Z ERROR ROUTE' );
@@ -29,9 +44,6 @@ app.use((error, req, res, next) => {
   const data = error.data;
   res.status(status).json({ message: message, data: data });
 });
-// app.use('/', (req, res, next) => {
-//   res.send('<h1>Hello</h1>')
-// })
 
 
 

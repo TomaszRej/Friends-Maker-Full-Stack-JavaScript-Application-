@@ -5,14 +5,24 @@ import { Grid, Segment, Header, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import UsersList from './components/UsersList';
 import MainMenu from './components/MainMenu';
+import PostsList from './components/PostsList';
 import openSocket from 'socket.io-client';
 import { getUsers } from './actions/userActions';
+import {getPosts } from './actions/postActions';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import  {login}  from './actions/authActions';
+import { login, logout } from './actions/authActions';
 
 
 
 class App extends Component {
+
+  componentDidMount() {
+    this.props.getUsers();
+    //this.props.getPosts();
+  }
+  componentWillUnmount() {
+    this.props.logout();
+  }
 
   // async componentWillMount(){
 
@@ -23,7 +33,7 @@ class App extends Component {
   //   const password = '123456';
   //   const loginData = { email, password };
 
-   
+
   //   login(loginData)
 
 
@@ -38,9 +48,13 @@ class App extends Component {
   }
 
   render() {
+
+    console.log(this.props.posts);
+
+    console.warn(this.props.user , 'IS_AUTHANTICATED')
     return (
       <BrowserRouter>
-        <Grid padded centered >
+        <Grid padded centered style={{backgroundColor: 'gray'}}>
           <Grid.Row>
             <Grid.Column width="14" >
               <Nav />
@@ -50,24 +64,17 @@ class App extends Component {
             <Grid.Column width="12">
               <Segment style={{ minHeight: '70vh' }}>
                 {this.props.user &&
-                  <Grid padded centered >
-                    <Grid.Row>
-                      <Grid.Column width="6" style={{ display: 'flex', justifyContent: 'center' }}>
-                        <Button fluid primary>Add Post</Button>
-                      </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row>
-                      <Grid.Column width="6" style={{ display: 'flex', justifyContent: 'center' }}>
-                        {this.renderPosts()}
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
+                  <PostsList/>
                 }
               </Segment>
             </Grid.Column>
-            <Grid.Column width="2">
-              <UsersList />
-            </Grid.Column>
+            {this.props.user &&
+              <Grid.Column width="2">
+                <UsersList />
+              </Grid.Column> 
+            }
+
+
           </Grid.Row>
         </Grid>
       </BrowserRouter>
@@ -108,8 +115,10 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
+    isAuthanticated: state.auth.isAuthanticated,
+    posts: state.posts.posts
 
   }
 }
 
-export default connect(mapStateToProps, { getUsers, login })(App);
+export default connect(mapStateToProps, { getUsers, getPosts, login })(App);

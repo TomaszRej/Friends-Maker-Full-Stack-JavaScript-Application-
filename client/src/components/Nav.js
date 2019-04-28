@@ -59,7 +59,7 @@ class MainMenu extends Component {
     // }
     return (
       <>
-        <Menu id="menu" secondary>
+        <Menu id="menu" secondary style={{backgroundColor: 'lightBlue'}}>
           {user
             ?
             <Menu.Menu position='right'>

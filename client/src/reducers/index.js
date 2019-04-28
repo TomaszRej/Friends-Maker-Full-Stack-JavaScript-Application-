@@ -5,8 +5,10 @@ import layoutReducer from './layotRedeucer';
 import registerErrorReducer from './registerErrorReducer';
 import loginErrorReducer from './loginErrorReducer';
 import usersReducer from './usersReducer';
+import postsReducer from './postsReducer';
 
 export default combineReducers({
+    posts: postsReducer,
     users: usersReducer,
     loginError: loginErrorReducer,
     registerError: registerErrorReducer,

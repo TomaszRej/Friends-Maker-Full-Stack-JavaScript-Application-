@@ -10,6 +10,7 @@ class LoginModal extends Component {
     state = {
         email: '',
         password: '',
+        rememberMe: false,
         message: []
     }
     componentDidUpdate(prevProps) {
@@ -42,11 +43,11 @@ class LoginModal extends Component {
 
     handleChange = (e) => this.setState({ [e.target.name]: e.target.value })
     handleSubmit = () => {
-        const { email, password } = this.state;
+        const { email, password, rememberMe } = this.state;
         const { login, closeLoginModal, isAuthanticated } = this.props;
 
         const loginData = { email, password };
-        login(loginData)
+        login(loginData, rememberMe )
 
         if (isAuthanticated) {
             this.props.getUsers();
@@ -57,7 +58,7 @@ class LoginModal extends Component {
 
 
     }
-
+    toggle = () => this.setState({ rememberMe: !this.state.rememberMe })
     handleClickOnLink = () => {
         console.log('test onLink');
 
@@ -105,7 +106,7 @@ class LoginModal extends Component {
                     <input name='password' type='password' placeholder='Password' value={password} onChange={this.handleChange} />
                 </Form.Field>
                 <Form.Field style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Checkbox label='Remember me' />
+                    <Checkbox label='Remember me' onChange={this.toggle} checked={this.state.rememberMe}/>
                     <a style={{ cursor: 'pointer' }} onClick={this.handleClickOnLink}>Forgot your password</a>
                     {/* <Link to='/forgot-password' className='link'>Forgot your password?</Link> */}
                 </Form.Field>

@@ -81,19 +81,20 @@ exports.loginUser = async (req, res, next) => {
     const token = jwt.sign(
       {
         email: user.email,
-        userId: user._id.toString()
+        userId: user._id.toString(),
+        test:'test' 
       },
       'mojJSONwebTokenVerySecret',
-      { expiresIn: '1h' }
+      { expiresIn: '1h'}
     );
 
     // ++
     const decodedToken = jwt.verify(token, config.get('jwtSecret'));
-    console.log(decodedToken, 'decoded token na backendzie ')
+   
     const decodedExp = decodedToken.exp - decodedToken.iat;
     const seconds = new Date().getTime() / 1000;
     const fromNow = decodedToken.exp - seconds;
-    console.log(decodedExp, seconds, fromNow, 'decoded Exp na backendzie ')
+    console.log(decodedExp, seconds, fromNow, 'decoded Exp  ')
 
     // --
 

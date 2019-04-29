@@ -1,11 +1,13 @@
 import {
   GET_POSTS,
-  ADD_POST
+  ADD_POST,
+  POSTS_LOADING
 } from '../actions/types';
 
 
 const initialState = {
-      posts: []
+  postsLoading: false,
+  posts: []
 };
 
 export default function (state = initialState, action) {
@@ -13,9 +15,19 @@ export default function (state = initialState, action) {
     case GET_POSTS:
       return {
         ...state,
-        posts: action.payload
+        posts: action.payload,
+        postsLoading: false
       };
-
+    case POSTS_LOADING:
+      return {
+        ...state,
+        postsLoading: true
+      };
+    case ADD_POST:
+      return {
+        ...state,
+        posts: state.posts.concat(action.payload)
+      }
     default:
       return state;
   }

@@ -15,9 +15,20 @@ exports.getPosts = async (req, res, next) => {
 
 
 
-exports.addPost =(req, res, next) => {
-  console.log(req.userId, 'req z add post')
-  const newPost = new Post({ title: 'new1', description:'test1', author: req.userId});
-  newPost.save();
-  res.status(201).json({ message: "Post created!", post: newPost })
+exports.addPost = (req, res, next) => {
+  console.log(req.body.title);
+  console.log(req.body.description)
+  const newPost = new Post({ title: req.body.title, description: req.body.description, author: req.body.author });
+  try {
+
+    newPost.save();
+    console.log('TAK')
+    res.status(201).json({ message: "Post created!", post: newPost })
+  } catch (err) {
+    console.log('NIE')
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
 }

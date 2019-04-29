@@ -1,75 +1,78 @@
 import React, { Component } from 'react'
-import { Button, Modal, Checkbox, Form, Message, Grid, Segment, Dimmer, Loader } from 'semantic-ui-react'
+import { Button, Modal, Checkbox, TextArea, Form, Message, Grid, Segment, Dimmer, Loader, Input } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
+import { closeAddPostModal } from '../actions/layoutActions';
+import { addPost } from '../actions/postActions';
 
 
 class AddPostModal extends Component {
     state = {
-        email: '',
+        title: '',
+        description: '',
         message: []
     }
-  
 
-    handleChange = (e) => this.setState({ [e.target.name]: e.target.value })
+
+    // handleChange = (e) => this.setState({ [e.target.name]: e.target.value })
     handleSubmit = () => {
-
+        const { title, description } = this.state;
+        const { closeAddPostModal, addPost } = this.props;
+        addPost({title, description});
+        closeAddPostModal();
     }
 
-    handleClickOnLink = () => {
 
-    }
 
-    renderErrorMessage = () => {
-        const { message } = this.state;
-        const error = message.length !== 0 &&
-            <Grid padded='vertically'>
-                <Grid.Row>
-                    <Grid.Column>
-                        <Message
-                            error
-                            header='There was some errors with your submission'
-                            list={[message]}
-                        />
-                    </Grid.Column>
-                </Grid.Row>
-            </Grid>
+    // renderErrorMessage = () => {
+    //     const { message } = this.state;
+    //     const error = message.length !== 0 &&
+    //         <Grid padded='vertically'>
+    //             <Grid.Row>
+    //                 <Grid.Column>
+    //                     <Message
+    //                         error
+    //                         header='There was some errors with your submission'
+    //                         list={[message]}
+    //                     />
+    //                 </Grid.Column>
+    //             </Grid.Row>
+    //         </Grid>
 
-        return error;
+    //     return error;
+    // }
 
-    }
+
     renderModalContent = () => {
-        const { email, password } = this.state;
-        const { isLoading } = this.props;
-        const content = isLoading ?
-            <Segment style={{ height: '300px' }}>
-                <Dimmer active>
-                    <Loader size='massive'>Loading</Loader>
-                </Dimmer>
-            </Segment> :
-            <Form onSubmit={this.handleSubmit}>
-                <Form.Field>
-                    <label>Email</label>
-                    <input name='email' placeholder='Email' value={email} onChange={e => this.setState({ email: e.target.value })} />
-                </Form.Field>
-                <Button color='orange' fluid type='submit'>Reset Password</Button>
-            </Form>
-        return content
+        const { title, description } = this.state;
+        return <Form onSubmit={this.handleSubmit}>
+            <Form.Field>
+                <label>Title</label>
+                <Input name='title' placeholder='title' value={title} onChange={e => this.setState({ title: e.target.value })} />
+            </Form.Field>
+            <Form.Field>
+                <label>Description</label>
+                <TextArea name='description' rows={3} placeholder='description' value={description} onChange={e => this.setState({ description: e.target.value })} />
+                {/* <Input name='title' placeholder='title' value={title} onChange={e => this.setState({ title: e.target.value })} /> */}
+            </Form.Field>
+            <Button color='orange' fluid onClick={this.handleSubmit}>Add</Button>
+        </Form>
     }
     render() {
-        const { forgotPasswordModalOpened } = this.props;
+        const { addPostModalOpened, closeAddPostModal } = this.props;
 
         console.warn(this.props.errors, "errors loginError LOGIN MODAL");
         return (
-            <Modal size='tiny' open={forgotPasswordModalOpened}
+            <Modal size='tiny'
+                open={addPostModalOpened}
                 centered={false}
-                // onClose={closeForgotPasswordModal}
-                >
+                onClose={closeAddPostModal}
+            >
                 <Modal.Header>Add Post</Modal.Header>
                 <Modal.Content>
-                    {this.renderErrorMessage()}
+                    {/* {this.renderErrorMessage()} */}
                     {this.renderModalContent()}
                 </Modal.Content>
             </Modal>
@@ -79,11 +82,13 @@ class AddPostModal extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoading: state.auth.isLoading,
+        user: state.auth.user,
+        // isLoading: state.auth.isLoading,
         error: state.loginError,
         isAuthanticated: state.auth.isAuthanticated,
-        forgotPasswordModalOpened: state.layout.forgotPasswordModalOpened
+        addPostModalOpened: state.layout.addPostModalOpened,
+        //forgotPasswordModalOpened: state.layout.forgotPasswordModalOpened
     }
 }
 
-export default connect(mapStateToProps,{})(AddPostModal);
+export default connect(mapStateToProps, { closeAddPostModal, addPost })(AddPostModal);

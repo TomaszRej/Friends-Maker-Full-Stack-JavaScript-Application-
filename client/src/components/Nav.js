@@ -96,7 +96,7 @@ class MainMenu extends Component {
           handleOpenLoginModal={this.handleOpenLoginModal}
         />
         <ForgotPasswordModal
-          modalOpen={true}
+         // modalOpen={true}
         />
 
 

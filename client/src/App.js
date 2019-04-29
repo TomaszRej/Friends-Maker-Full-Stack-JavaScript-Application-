@@ -18,11 +18,13 @@ class App extends Component {
 
   componentDidMount() {
     this.props.getUsers();
-    //this.props.getPosts();
+    this.props.getPosts();
   }
-  componentWillUnmount() {
-    this.props.logout();
-  }
+
+
+  // componentWillUnmount() {
+  //   this.props.logout();
+  // }
 
   // async componentWillMount(){
 
@@ -121,4 +123,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { getUsers, getPosts, login })(App);
+export default connect(mapStateToProps, { getUsers, getPosts, login,  })(App);

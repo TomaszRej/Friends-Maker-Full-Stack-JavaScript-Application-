@@ -1,8 +1,8 @@
 import React from 'react'
-import { Image, List, Button } from 'semantic-ui-react'
+import { Icon, List, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux';
-import { getUsers } from '../actions/userActions';
-import openSocket from 'socket.io-client';
+import { getUsers } from '../../actions/userActions';
+
 
 
 class UsersList extends React.Component {
@@ -24,7 +24,7 @@ class UsersList extends React.Component {
         return (
           <List selection verticalAlign='middle'>
             <List.Item active>
-              <Image avatar src='https://react.semantic-ui.com/images/avatar/small/helen.jpg' />
+            <Icon name='user' />
               <List.Content>
                 <List.Header>{user.name}</List.Header>
               </List.Content>

@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 import Nav from './components/Nav';
 import { Grid, Segment, Header, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import UsersList from './components/UsersList';
+
 import MainMenu from './components/MainMenu';
 import PostsList from './components/PostsList';
 import openSocket from 'socket.io-client';
 import { getUsers } from './actions/userActions';
-import {getPosts } from './actions/postActions';
+import { getPosts } from './actions/postActions';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { login, logout } from './actions/authActions';
-
+import UsersTabs from './components/usersTabs/UsersTabs';
 
 
 class App extends Component {
@@ -21,59 +21,32 @@ class App extends Component {
     this.props.getPosts();
   }
 
-
-  // componentWillUnmount() {
-  //   this.props.logout();
-  // }
-
-  // async componentWillMount(){
-
-  //   const { login } = this.props;
-  //   const user = await localStorage.getItem('user');
-  //   console.warn(user.email, 'USERRRRRRR')
-  //   const email = user.email;
-  //   const password = '123456';
-  //   const loginData = { email, password };
-
-
-  //   login(loginData)
-
-
-  //   //login(user);
-
-
-
-  // }
-
   renderPosts = () => {
     return <Segment ><div>test</div></Segment>
   }
 
   render() {
 
-    console.log(this.props.posts);
-
-    console.warn(this.props.user , 'IS_AUTHANTICATED')
     return (
       <BrowserRouter>
-        <Grid padded centered style={{backgroundColor: 'gray'}}>
-          <Grid.Row>
-            <Grid.Column width="14" >
+        <Grid padded centered style={{ backgroundColor: '#f5f5f5' }}>
+          <Grid.Row style={{ backgroundColor: 'white' }}>
+            <Grid.Column width="16" >
               <Nav />
             </Grid.Column>
           </Grid.Row>
           <Grid.Row id='main-content' >
-            <Grid.Column width="12">
+            <Grid.Column width="13">
               <Segment style={{ minHeight: '70vh' }}>
                 {this.props.user &&
-                  <PostsList/>
+                  <PostsList />
                 }
               </Segment>
             </Grid.Column>
             {this.props.user &&
-              <Grid.Column width="2">
-                <UsersList />
-              </Grid.Column> 
+                <Grid.Column width="3">
+                  <UsersTabs />
+                </Grid.Column>
             }
 
 
@@ -123,4 +96,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { getUsers, getPosts, login,  })(App);
+export default connect(mapStateToProps, { getUsers, getPosts, login, })(App);

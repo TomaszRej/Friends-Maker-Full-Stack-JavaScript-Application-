@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Card, Icon, Button, Modal, Segment, Dimmer, Loader, } from 'semantic-ui-react';
+import { Grid, Card, Icon, Button, Modal, Segment, Dimmer, Loader, List } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import AddPostModal from './AddPostModal';
 import { openAddPostModal } from '../actions/layoutActions';
@@ -29,14 +29,16 @@ class PostsList extends Component {
 
     renderPostContent = (title, description) => {
         return (
-            <Grid.Column>
-                <Grid.Row style={{ fontWeight: 'bold', textDecoration: 'underline' }}>
-                    {title}
-                </Grid.Row>
-                <Grid.Row>
-                    {description}
-                </Grid.Row>
-            </Grid.Column>
+
+            <List selection verticalAlign='middle'>
+                <List.Item>
+                    {/* <Image avatar src='/images/avatar/small/helen.jpg' /> */}
+                    <List.Content>
+                        <List.Header>{title}</List.Header>
+                        <p>{description}</p>
+                    </List.Content>
+                </List.Item>
+            </List>
         )
 
     }

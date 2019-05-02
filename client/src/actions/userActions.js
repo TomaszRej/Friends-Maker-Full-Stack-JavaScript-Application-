@@ -6,6 +6,14 @@ import {
 import tokenConfig from '../helpers/tokenConfig';
 
 
+export const follow = (currUserId, userToFollowId) => async (dispatch, getState) => {
+    console.log(currUserId, userToFollowId);
+
+    const body = { currUserId, userToFollowId };
+
+
+}
+
 export const getUsers = () => async (dispatch, getState) => {
 
     dispatch({

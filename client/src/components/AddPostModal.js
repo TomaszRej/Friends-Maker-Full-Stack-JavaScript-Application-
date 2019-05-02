@@ -3,9 +3,9 @@ import { Button, Modal, Checkbox, TextArea, Form, Message, Grid, Segment, Dimmer
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-
+import openSocket from 'socket.io-client';
 import { closeAddPostModal } from '../actions/layoutActions';
-import { addPost } from '../actions/postActions';
+import { addPost, addToPosts } from '../actions/postActions';
 
 
 class AddPostModal extends Component {
@@ -15,12 +15,25 @@ class AddPostModal extends Component {
         message: []
     }
 
+    componentDidMount() {
+        const { title, description } = this.state;
+        const { addToPosts, posts } = this.props;
+
+        const socket = openSocket('http://localhost:8000');
+        socket.on('posts', data => {
+            if (data.action === 'create') {
+                addToPosts({ data });
+            }
+
+        });
+    }
+
 
     // handleChange = (e) => this.setState({ [e.target.name]: e.target.value })
     handleSubmit = () => {
         const { title, description } = this.state;
         const { closeAddPostModal, addPost } = this.props;
-        addPost({title, description});
+        addPost({ title, description });
         closeAddPostModal();
     }
 
@@ -63,7 +76,6 @@ class AddPostModal extends Component {
     render() {
         const { addPostModalOpened, closeAddPostModal } = this.props;
 
-        console.warn(this.props.errors, "errors loginError LOGIN MODAL");
         return (
             <Modal size='tiny'
                 open={addPostModalOpened}
@@ -88,7 +100,9 @@ const mapStateToProps = state => {
         isAuthanticated: state.auth.isAuthanticated,
         addPostModalOpened: state.layout.addPostModalOpened,
         //forgotPasswordModalOpened: state.layout.forgotPasswordModalOpened
+
+        posts: state.posts.posts
     }
 }
 
-export default connect(mapStateToProps, { closeAddPostModal, addPost })(AddPostModal);
+export default connect(mapStateToProps, { closeAddPostModal, addPost, addToPosts })(AddPostModal);

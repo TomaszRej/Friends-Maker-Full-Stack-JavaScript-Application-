@@ -14,6 +14,10 @@ const postSchema = new Schema({
   likes: {
     type: Number
   },
+  authorName: {
+    type: String,
+    required: true
+  },
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User',

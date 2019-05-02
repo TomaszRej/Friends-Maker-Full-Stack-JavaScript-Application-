@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Grid, Card, Icon, Button, Modal, Segment, Dimmer, Loader } from 'semantic-ui-react';
+import { Grid, Card, Icon, Button, Modal, Segment, Dimmer, Loader, } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import AddPostModal from './AddPostModal';
 import { openAddPostModal } from '../actions/layoutActions';
-
+import openSocket from 'socket.io-client';
 
 class PostsList extends Component {
     constructor(props) {
@@ -13,6 +13,8 @@ class PostsList extends Component {
             posts: [{ username: 1 }, { username: 2 }]
         }
     }
+
+
 
     handleClickAddPost = () => {
         const { user, openAddPostModal } = this.props;
@@ -25,28 +27,47 @@ class PostsList extends Component {
         // })
     }
 
+    renderPostContent = (title, description) => {
+        return (
+            <Grid.Column>
+                <Grid.Row style={{ fontWeight: 'bold', textDecoration: 'underline' }}>
+                    {title}
+                </Grid.Row>
+                <Grid.Row>
+                    {description}
+                </Grid.Row>
+            </Grid.Column>
+        )
+
+    }
 
     renderPosts = () => {
         const { posts, postsLoading } = this.props;
-        const description = 'Amy is a violinist with 2 years experience in the wedding industry.';
 
-        const postsToReturn = posts.map(post => {
+        const postsToReturn = posts.map((post) => {
+
             return (
-                <Grid.Row style={{ marginBottom: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Grid.Row key={post.id} style={{ marginBottom: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Card>
                         <Card.Content header={post.title} >
                             <Icon name='user' />
-                            {/* {post.username} */}
-                            {post.title}
+                            {post.authorName}
+
                         </Card.Content>
-                        <Card.Content description={post.description} />
+                        <Card.Content >
+                            {this.renderPostContent(post.title, post.description)}
+                        </Card.Content>
                         <Card.Content extra>
                             <Icon name='heart' />
-                            4
-                    </Card.Content>
+                            {post.likes}
+                        </Card.Content>
                     </Card >
                 </Grid.Row>
             )
+
+
+
+
         })
 
         if (postsLoading) {
@@ -56,7 +77,6 @@ class PostsList extends Component {
                 </Dimmer>
             </Segment>
         }
-
 
         return postsToReturn
 

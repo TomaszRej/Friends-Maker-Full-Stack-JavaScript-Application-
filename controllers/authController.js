@@ -82,6 +82,8 @@ exports.loginUser = async (req, res, next) => {
       {
         email: user.email,
         userId: user._id.toString(),
+        name: user.name,
+
         test:'test' 
       },
       'mojJSONwebTokenVerySecret',

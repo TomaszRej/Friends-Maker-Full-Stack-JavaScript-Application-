@@ -1,6 +1,7 @@
 import {
   GET_POSTS,
   ADD_POST,
+  ADD_TO_POSTS,
   POSTS_LOADING
 } from '../actions/types';
 
@@ -25,6 +26,13 @@ export default function (state = initialState, action) {
       };
     case ADD_POST:
       return {
+        ...state,
+        posts: state.posts.concat(action.payload)
+      }
+    case ADD_TO_POSTS:
+
+      return {
+
         ...state,
         posts: state.posts.concat(action.payload)
       }

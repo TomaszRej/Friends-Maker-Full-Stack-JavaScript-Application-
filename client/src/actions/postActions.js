@@ -1,4 +1,4 @@
-import { GET_POSTS, ADD_POST, POSTS_LOADING } from './types';
+import { GET_POSTS, ADD_POST, ADD_TO_POSTS, POSTS_LOADING } from './types';
 import tokenConfig from '../helpers/tokenConfig';
 import axios from 'axios';
 
@@ -25,13 +25,21 @@ export const addPost = ({ title, description }) => async (dispatch, getState) =>
   const body = { title: title, description: description, author: getState().auth.user._id };
 
   try {
-    await axios.post('http://localhost:8000/api/posts/', body, tokenConfig(getState));
-    dispatch({
-  //to do fetch Post action
-    })
+    const res = await axios.post('http://localhost:8000/api/posts/', body, tokenConfig(getState));
 
   } catch (err) {
     console.log(err)
   }
 
 }
+
+export const addToPosts = ({ data }) => async (dispatch, getState) => {
+  dispatch({
+    type: ADD_TO_POSTS,
+    payload: data.post
+  })
+}
+
+
+
+

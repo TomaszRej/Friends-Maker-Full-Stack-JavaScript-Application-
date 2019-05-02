@@ -11,7 +11,7 @@ class ForgotPasswordModal extends Component {
         email: '',
         message: []
     }
-  
+  componentWillUnmount
 
     handleChange = (e) => this.setState({ [e.target.name]: e.target.value })
     handleSubmit = () => {

@@ -1,24 +1,125 @@
 import React from 'react'
-import { Icon, List, Button, ListContent, Grid, Header ,Popup} from 'semantic-ui-react'
+import { Icon, List, Button, ListContent, Grid, Header, Popup } from 'semantic-ui-react'
 import { connect } from 'react-redux';
-import { getUsers, follow } from '../../actions/userActions';
-
+import { getUsers, follow, updateUser } from '../../actions/userActions';
+import openSocket from 'socket.io-client';
 
 
 
 class UsersList extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      updatedCurrUser: this.props.currUser,
+      following: [],
+      users: [],
+
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.warn(nextProps.users, 'nextPropsUsers')
+
+    const { currUser } = this.props;
+
+    const users = nextProps.users;
+
+
+
+    const u = users.find(el => el._id === currUser._id)
+
+    const following = u.following.slice();
+    this.setState({
+      users: users,
+      following: following
+    })
+
+
+  }
+
+
+
+
+
+  componentDidMount() {
+    const { updateUser, getUsers, users, currUser } = this.props;
+    const following = currUser.following.slice();
+
+    this.setState({
+      users: users,
+      following: following
+    })
+
+    const socket = openSocket('http://localhost:8000');
+    socket.on('follow', data => {
+      for (const user of data.users) {
+        updateUser(user);
+
+        this.updateUsers(user);
+      }
+      getUsers();
+    });
+  }
+
+
+
+  updateUsers = user => {
+    const { currUser } = this.props;
+
+    const users = this.state.users.slice().map(u => {
+      if (u._id === user._id) {
+        return user
+
+      } else {
+        return u;
+      }
+    })
+
+    const updatedCurrUser = users.find(el => el._id === currUser._id);
+
+    const following = updatedCurrUser.following.slice();
+
+    this.setState({
+      updatedCurrUser: updatedCurrUser,
+      users: users,
+      following: following
+    })
+  }
+
+
+
+
   handleAddFriendClick = (userToFollow) => {
-    const {currUser, follow } = this.props;
+    const { currUser, follow, getUsers } = this.props;
     follow(currUser._id, userToFollow._id);
+
+    const following = this.state.following.slice().concat(userToFollow._id)
+
+    
+
+
+    this.setState({
+  
+      following: following
+    })
+
   }
 
   render() {
-    const {currUser, users} = this.props;
-    const allUsersExceptTheLoggedOne = users.filter(u => u._id !== currUser._id );
+    const { currUser } = this.props;
+    const { users, following , updatedCurrUser} = this.state;
+    console.log(users, 'users w render ')
+    console.log(following, 'following w render')
+
+    const allUsersExceptTheLoggedOne = users.filter(u => u._id !== currUser._id);
 
     return (
       allUsersExceptTheLoggedOne.map(user => {
+
+        const ifFollowing = following.find(followingId => followingId === user._id);
+
         return (
           <List selection verticalAlign='middle'>
             <List.Item active={false} >
@@ -30,9 +131,14 @@ class UsersList extends React.Component {
                   </Grid.Column>
                   <Grid.Column width='4' >
 
-                  <Popup trigger={<Button circular icon='add' onClick={() => this.handleAddFriendClick(user)}/>} content='Send the invitation' />
-                  
-                  <Popup trigger={<Button circular positive icon='check'  onClick={this.handleAddBtnClick}/>} content='Send the invitation' />
+
+                    {ifFollowing ?
+
+                      <Button circular positive icon='check' onClick={this.handleAddBtnClick} />
+
+                      :
+                      <Popup trigger={<Button circular icon='add' onClick={() => this.handleAddFriendClick(user)} />} content='Send the invitation' />
+                    }
                   </Grid.Column>
                 </Grid>
 
@@ -53,4 +159,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, { getUsers, follow })(UsersList);
+export default connect(mapStateToProps, { getUsers, follow, updateUser })(UsersList);

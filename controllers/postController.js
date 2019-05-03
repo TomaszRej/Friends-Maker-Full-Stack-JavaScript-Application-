@@ -18,22 +18,7 @@ exports.getPosts = async (req, res, next) => {
 
 exports.addPost = async (req, res, next) => {
   
-  console.log(req.body.title);
-  console.log(req.body.description);
-  console.log(req.body.author);
-  console.log(req.body.userId);
-  console.log(req.userId);
-  console.log(req.userName);
-  
-  console.log('---------')
-
-
-
-
   try {
-    //const postAuthor = await User.find(ObjectId(req.userId));
-    //const postAuthorName = postAuthor.name;
-   
     const newPost = new Post({
       title: req.body.title,
       description: req.body.description,

@@ -21,6 +21,8 @@ class App extends Component {
     this.props.getPosts();
   }
 
+
+
   renderPosts = () => {
     return <Segment ><div>test</div></Segment>
   }

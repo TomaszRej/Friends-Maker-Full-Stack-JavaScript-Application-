@@ -6,25 +6,10 @@ import { openAddPostModal } from '../actions/layoutActions';
 import openSocket from 'socket.io-client';
 
 class PostsList extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            posts: [{ username: 1 }, { username: 2 }]
-        }
-    }
-
-
 
     handleClickAddPost = () => {
         const { user, openAddPostModal } = this.props;
         openAddPostModal();
-
-        // const posts = this.state.posts.slice();
-        // posts.push({username: user.name })
-        // this.setState({
-        //     posts: posts
-        // })
     }
 
     renderPostContent = (title, description) => {

@@ -1,13 +1,15 @@
 import {
   USERS_LOADED,
   USERS_LOADING,
-  UPDATE_USER
+  UPDATE_USER,
+  FRIENDS_LOADED
 } from '../actions/types';
 
 
 const initialState = {
   isLoading: false,
-  users: []
+  users: [],
+  friends: []
 };
 
 export default function (state = initialState, action) {
@@ -23,6 +25,11 @@ export default function (state = initialState, action) {
         isLoading: false,
         users: action.payload
       };
+    case FRIENDS_LOADED:
+      return {
+        ...state,
+        friends: action.payload
+      }
     case UPDATE_USER:
       return {
         ...state,

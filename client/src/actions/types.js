@@ -2,6 +2,7 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const USERS_LOADING = 'USERS_LOADING';
 export const USERS_LOADED = 'USERS_LOADED';
+export const FRIENDS_LOADED = 'FRIENDS_LOADED';
 export const UPDATE_USER = 'UPDATE_USER';
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';

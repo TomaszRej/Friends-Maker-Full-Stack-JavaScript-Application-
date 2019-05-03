@@ -19,25 +19,25 @@ class UsersList extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.warn(nextProps.users, 'nextPropsUsers')
+  // componentWillReceiveProps(nextProps) {
+  //   console.warn(nextProps.users, 'nextPropsUsers')
 
-    const { currUser } = this.props;
+  //   const { currUser } = this.props;
 
-    const users = nextProps.users;
-
-
-
-    const u = users.find(el => el._id === currUser._id)
-
-    const following = u.following.slice();
-    this.setState({
-      users: users,
-      following: following
-    })
+  //   const users = nextProps.users;
 
 
-  }
+
+  //   const u = users.find(el => el._id === currUser._id)
+
+  //   const following = u.following.slice();
+  //   this.setState({
+  //     users: users,
+  //     following: following
+  //   })
+
+
+  // }
 
 
 
@@ -57,47 +57,50 @@ class UsersList extends React.Component {
       for (const user of data.users) {
         updateUser(user);
 
-        this.updateUsers(user);
+       // this.updateUsers(user);
       }
-      getUsers();
+      //getUsers();
     });
   }
 
 
 
-  updateUsers = user => {
-    const { currUser } = this.props;
+  // updateUsers = user => {
+  //   const { currUser } = this.props;
 
-    const users = this.state.users.slice().map(u => {
-      if (u._id === user._id) {
-        return user
+  //   const users = this.state.users.slice().map(u => {
+  //     if (u._id === user._id) {
+  //       return user
 
-      } else {
-        return u;
-      }
-    })
+  //     } else {
+  //       return u;
+  //     }
+  //   })
 
-    const updatedCurrUser = users.find(el => el._id === currUser._id);
+  //   const updatedCurrUser = users.find(el => el._id === currUser._id);
 
-    const following = updatedCurrUser.following.slice();
+  //   const following = updatedCurrUser.following.slice();
 
-    this.setState({
-      updatedCurrUser: updatedCurrUser,
-      users: users,
-      following: following
-    })
-  }
+  //   this.setState({
+  //     updatedCurrUser: updatedCurrUser,
+  //     users: users,
+  //     following: following
+  //   })
+  // }
 
 
 
 
   handleAddFriendClick = (userToFollow) => {
-    const { currUser, follow, getUsers } = this.props;
+    const { currUser, follow, getUsers , addToFollowing} = this.props;
     follow(currUser._id, userToFollow._id);
 
     const following = this.state.following.slice().concat(userToFollow._id)
+console.log(typeof addToFollowing, 'isFunction');
 
-    
+    if(typeof addToFollowing === 'function'){
+      addToFollowing(userToFollow._id);
+    }
 
 
     this.setState({
@@ -108,10 +111,10 @@ class UsersList extends React.Component {
   }
 
   render() {
-    const { currUser } = this.props;
-    const { users, following , updatedCurrUser} = this.state;
-    console.log(users, 'users w render ')
-    console.log(following, 'following w render')
+    const { currUser, following ,users} = this.props;
+   // const { users, updatedCurrUser} = this.state;
+
+   
 
     const allUsersExceptTheLoggedOne = users.filter(u => u._id !== currUser._id);
 

@@ -3,7 +3,7 @@ import { Icon, List, Button, ListContent, Grid, Header, Popup } from 'semantic-u
 import { connect } from 'react-redux';
 import { getUsers, follow, updateUser } from '../../actions/userActions';
 import openSocket from 'socket.io-client';
-
+import areTheUsersFriends from '../../helpers/areTheUsersFriends';
 
 
 class UsersList extends React.Component {
@@ -57,7 +57,7 @@ class UsersList extends React.Component {
       for (const user of data.users) {
         updateUser(user);
 
-       // this.updateUsers(user);
+        // this.updateUsers(user);
       }
       //getUsers();
     });
@@ -92,36 +92,40 @@ class UsersList extends React.Component {
 
 
   handleAddFriendClick = (userToFollow) => {
-    const { currUser, follow, getUsers , addToFollowing} = this.props;
+    const { currUser, follow, getUsers, addToFollowing } = this.props;
     follow(currUser._id, userToFollow._id);
 
     const following = this.state.following.slice().concat(userToFollow._id)
-console.log(typeof addToFollowing, 'isFunction');
+    console.log(typeof addToFollowing, 'isFunction');
 
-    if(typeof addToFollowing === 'function'){
+    if (typeof addToFollowing === 'function') {
       addToFollowing(userToFollow._id);
     }
 
 
     this.setState({
-  
+
       following: following
     })
 
   }
 
   render() {
-    const { currUser, following ,users} = this.props;
-   // const { users, updatedCurrUser} = this.state;
+    const { currUser, following, users, friends } = this.props;
+    // const { users, updatedCurrUser} = this.state;
 
-   
+
 
     const allUsersExceptTheLoggedOne = users.filter(u => u._id !== currUser._id);
-
     return (
       allUsersExceptTheLoggedOne.map(user => {
 
         const ifFollowing = following.find(followingId => followingId === user._id);
+        console.warn(areTheUsersFriends(currUser, user), "TEST ARE USERS FRIENDS")
+
+        if(areTheUsersFriends(currUser, user)){
+          return
+        }
 
         return (
           <List selection verticalAlign='middle'>
@@ -157,7 +161,8 @@ console.log(typeof addToFollowing, 'isFunction');
 const mapStateToProps = state => {
   return {
     users: state.users.users,
-    currUser: state.auth.user
+    currUser: state.auth.user,
+    friends: state.users.friends
   }
 }
 

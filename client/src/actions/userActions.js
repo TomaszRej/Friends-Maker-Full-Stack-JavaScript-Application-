@@ -48,13 +48,14 @@ export const getUsers = () => async (dispatch, getState) => {
             type: USERS_LOADED,
             payload: res.data.users
         })
+        
         //++
         let friends = [];
         const currUser = getState().auth.user;
         for (const user of res.data.users) {
   
           const tempFollowing = currUser.following.filter(id => id === user._id);
-          const tempFollowers = currUser.followers.filter(id => id === user._id);
+          const tempFollowers = user.following.filter(id => id === currUser._id);
   
           if (tempFollowing.length !== 0 && tempFollowers.length !== 0) {
             friends.push(user)

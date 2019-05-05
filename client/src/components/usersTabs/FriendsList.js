@@ -9,42 +9,26 @@ class FriendsList extends React.Component {
     super(props);
 
     this.state = {
-      friends: []
+
     }
   }
 
-  // componentDidMount() {
-  //   const { currUser, users } = this.props;
 
-  //   if (users.length !== 0) {
-  //     let friends = [];
-  //     for (const user of users) {
-
-  //       const tempFollowing = currUser.following.filter(id => id === user._id);
-  //       const tempFollowers = currUser.followers.filter(id => id === user._id);
-
-  //       if (tempFollowing.length !== 0 && tempFollowers.length !== 0) {
-  //         friends.push(user)
-  //       }
-  //     }
-  //     this.setState({
-  //       friends: friends
-  //     })
-  //   }
-
-  // }
 
   render() {
 
-    // const { friends } = this.state;
 
-    const { friends, FRIENDS } = this.props;
+
+    const { friends } = this.props;
 
 
 
     return (
       <>
-        {FRIENDS.length !== 0 ? FRIENDS.map(friend => {
+        {friends.length !== 0 ? friends.map(friend => {
+
+ 
+
           return <List selection verticalAlign='middle'>
             <List.Item active={false} >
               <List.Content >
@@ -59,8 +43,6 @@ class FriendsList extends React.Component {
           </List>
         }) : <div>You don't have any friends yet</div>}
 
-
-
       </>
     )
 
@@ -72,7 +54,7 @@ const mapStateToProps = state => {
   return {
     currUser: state.auth.user,
     users: state.users.users,
-    FRIENDS: state.users.friends
+    friends: state.users.friends
   }
 }
 

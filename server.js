@@ -25,17 +25,8 @@ app.use((req, res, next) => {
 });
 
 
-
-
-
-
 app.use('/api/users', authRoutes);
 app.use('/api/posts', postRoutes);
-
-
-
-
-
 
 app.use((error, req, res, next) => {
   console.warn(error, 'Z ERROR ROUTE' );
@@ -44,8 +35,6 @@ app.use((error, req, res, next) => {
   const data = error.data;
   res.status(status).json({ message: message, data: data });
 });
-
-
 
 
 const db = config.get('mongoURI');

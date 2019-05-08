@@ -30,8 +30,6 @@ export const updateUser = (user) => async (dispatch, getState) => {
         type: UPDATE_USER,
         payload: user
     })
-
-
 }
 
 export const getUsers = () => async (dispatch, getState) => {
@@ -50,6 +48,7 @@ export const getUsers = () => async (dispatch, getState) => {
         })
         
         //++
+        // todo move the logic to frontend
         let friends = [];
         const currUser = getState().auth.user;
         for (const user of res.data.users) {

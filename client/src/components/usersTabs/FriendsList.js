@@ -1,52 +1,36 @@
 import React from 'react'
-import { Icon, List, Button, Popup, Grid } from 'semantic-ui-react'
-import { connect } from 'react-redux';
-import { getUsers } from '../../actions/userActions';
-
+import {Icon, List, Button, Popup, Grid} from 'semantic-ui-react'
+import {connect} from 'react-redux';
+import FriendItem from './FriendItem';
+import openSocket from "socket.io-client";
 
 class FriendsList extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
 
-    }
+  componentDidMount() {
+    const socket = openSocket('http://localhost:8000');
+
+    socket.on('follow', data => {
+        this.setState({
+          //
+        })
+    })
   }
 
-
-
   render() {
+    const {users, currUser} = this.props;
 
-
-
-    const { friends } = this.props;
-
-
+    const friends = users.filter(user => {
+      if (user.following.includes(currUser._id) && currUser.following.includes(user._id)) {
+        return user
+      }
+    })
 
     return (
-      <>
-        {friends.length !== 0 ? friends.map(friend => {
-
- 
-
-          return <List selection verticalAlign='middle'>
-            <List.Item active={false} >
-              <List.Content >
-                <Grid verticalAlign='middle'>
-                  <Grid.Column width='12' style={{ display: 'flex', flexDirection: 'row' }}>
-                    <Icon name='user' />
-                    <List.Header>{friend.name}</List.Header>
-                  </Grid.Column>
-                </Grid>
-              </List.Content>
-            </List.Item>
-          </List>
-        }) : <div>You don't have any friends yet</div>}
-
-      </>
+      friends.map(friend => {
+        return <FriendItem friend={friend}/>
+      })
     )
-
-
   }
 }
 
@@ -54,7 +38,6 @@ const mapStateToProps = state => {
   return {
     currUser: state.auth.user,
     users: state.users.users,
-    friends: state.users.friends
   }
 }
 

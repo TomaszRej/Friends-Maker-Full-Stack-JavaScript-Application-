@@ -15,18 +15,7 @@ class AddPostModal extends Component {
         message: []
     }
 
-    componentDidMount() {
-        const { title, description } = this.state;
-        const { addToPosts, posts } = this.props;
 
-        const socket = openSocket('http://localhost:8000');
-        socket.on('posts', data => {
-            if (data.action === 'create') {
-                addToPosts({ data });
-            }
-
-        });
-    }
 
 
     // handleChange = (e) => this.setState({ [e.target.name]: e.target.value })

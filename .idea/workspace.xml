@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="381353a7-fa1b-49bb-bfa3-10a3dd0cd32d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/actions/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/types.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/actions/userActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/userActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/usersTabs/FriendsList.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/usersTabs/FriendsList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/usersTabs/FriendsSection.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/usersTabs/FriendsSection.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/usersTabs/InvitationsList.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/usersTabs/InvitationsList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/usersTabs/UsersList.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/usersTabs/UsersList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/usersTabs/UsersTabs.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/usersTabs/UsersTabs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/helpers/areTheUsersFriends.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/areTheUsersFriends.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/reducers/usersReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/usersReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/AddPostModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/AddPostModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PostsList.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PostsList.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -90,9 +80,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/AddPostModal.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-42">
+            <state relative-caret-position="154">
+              <caret line="7" column="18" lean-forward="true" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/components/PostsList.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="582">
+              <caret line="121" column="70" selection-start-line="121" selection-start-column="70" selection-end-line="121" selection-end-column="70" />
               <folding>
-                <element signature="e#0#40#0" expanded="true" />
+                <element signature="e#0#41#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -101,8 +101,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/src/components/usersTabs/UsersTabs.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="579">
-              <caret line="47" selection-start-line="47" selection-end-line="47" />
+            <state relative-caret-position="215">
+              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -150,6 +150,8 @@
         <option value="$PROJECT_DIR$/client/src/components/usersTabs/InvitationsList.js" />
         <option value="$PROJECT_DIR$/client/src/components/usersTabs/UsersList.js" />
         <option value="$PROJECT_DIR$/client/src/components/usersTabs/FriendsList.js" />
+        <option value="$PROJECT_DIR$/client/src/components/AddPostModal.js" />
+        <option value="$PROJECT_DIR$/client/src/components/PostsList.js" />
         <option value="$PROJECT_DIR$/client/src/components/usersTabs/UsersTabs.js" />
       </list>
     </option>
@@ -266,12 +268,12 @@
       <option name="presentableId" value="Default" />
       <updated>1557241540344</updated>
       <workItem from="1557241542255" duration="15979000" />
-      <workItem from="1557422420010" duration="10356000" />
+      <workItem from="1557422420010" duration="10679000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26335000" />
+    <option name="totallyTimeSpent" value="26658000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
@@ -404,15 +406,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/PostsList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-70">
@@ -438,15 +431,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
           <caret line="11" column="36" lean-forward="true" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/AddPostModal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-42">
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -515,10 +499,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/AddPostModal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="7" column="18" lean-forward="true" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/PostsList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="582">
+          <caret line="121" column="70" selection-start-line="121" selection-start-column="70" selection-end-line="121" selection-end-column="70" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/usersTabs/UsersTabs.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="579">
-          <caret line="47" selection-start-line="47" selection-end-line="47" />
+        <state relative-caret-position="215">
+          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>

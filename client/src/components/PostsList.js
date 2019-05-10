@@ -3,9 +3,24 @@ import { Grid, Card, Icon, Button, Modal, Segment, Dimmer, Loader, List } from '
 import { connect } from 'react-redux';
 import AddPostModal from './AddPostModal';
 import { openAddPostModal } from '../actions/layoutActions';
+import {addToPosts } from '../actions/postActions';
 import openSocket from 'socket.io-client';
 
 class PostsList extends Component {
+
+
+    componentDidMount() {
+
+        const { addToPosts } = this.props;
+
+        const socket = openSocket('http://localhost:8000');
+        socket.on('posts', data => {
+            if (data.action === 'create') {
+                addToPosts({ data });
+            }
+
+        });
+    }
 
     handleClickAddPost = () => {
         const { user, openAddPostModal } = this.props;
@@ -104,4 +119,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { openAddPostModal })(PostsList);
+export default connect(mapStateToProps, { openAddPostModal, addToPosts })(PostsList);

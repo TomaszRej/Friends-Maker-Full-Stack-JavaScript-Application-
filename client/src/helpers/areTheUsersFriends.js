@@ -1,6 +1,6 @@
 const areTheUsersFriends = (currUser, user) => {
 
-    if (user.following.includes(currUser._id) && currUser.following.includes(user._id)){
+    if (currUser.following.includes(user._id) && currUser.followers.includes(user._id)){
       return true;
     } else {
       return false;

@@ -6,16 +6,12 @@ import {follow} from '../../actions/userActions'
 import openSocket from "socket.io-client"
 import InvitationItem from './InvitationItem'
 
+
 class InvitationsList extends React.Component {
+  constructor(props) {
+    super(props);
 
-  componentDidMount() {
-    const socket = openSocket('http://localhost:8000')
 
-    socket.on('follow', data => {
-      this.setState({
-        //
-      })
-    })
   }
 
 
@@ -27,7 +23,11 @@ class InvitationsList extends React.Component {
   }
 
   render() {
-    const {currUser, users} = this.props
+    const {updatedCurrUser, updatedUsers} = this.props
+
+    const currUser = updatedCurrUser ? updatedCurrUser : this.props.currUser;
+    const users = updatedUsers.length !== 0 ? updatedUsers : this.props.users;
+
 
     return (
       users.map(user => {
@@ -35,9 +35,13 @@ class InvitationsList extends React.Component {
         if (areTheUsersFriends(currUser, user)) {
           return
         }
+        const followers = currUser.followers.find(u => u === user._id);
+        console.log(followers, 'followers')
 
-        if (user.following.find(u => u === currUser._id)) {
-          return <InvitationItem user={user} handleAddFriendClick={this.handleAddFriendClick}/>
+        if (followers) {
+          return <InvitationItem user={user}
+                                 handleAddFriendClick={this.handleAddFriendClick}
+          />
         }
       })
 

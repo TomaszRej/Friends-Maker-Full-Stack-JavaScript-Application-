@@ -1,15 +1,18 @@
 import {
   USERS_LOADED,
   USERS_LOADING,
-  UPDATE_USER,
-  FRIENDS_LOADED
+  UPDATING_USER_ERROR,
+  USER_UPDATING,
+  USER_UPDATED,
+
 } from '../actions/types';
 
 
 const initialState = {
   isLoading: false,
+  updatingError: null,
   users: [],
-  friends: []
+
 };
 
 export default function (state = initialState, action) {
@@ -19,18 +22,14 @@ export default function (state = initialState, action) {
         ...state,
         isLoading: true
       };
+    case USER_UPDATING:
     case USERS_LOADED:
       return {
         ...state,
         isLoading: false,
         users: action.payload
       };
-    case FRIENDS_LOADED:
-      return {
-        ...state,
-        friends: action.payload
-      }
-    case UPDATE_USER:
+    case USER_UPDATED:
       return {
         ...state,
         users: state.users.map(user => {
@@ -42,6 +41,14 @@ export default function (state = initialState, action) {
           }
           return user
         })
+      }
+
+    case UPDATING_USER_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        updatingError: action.payload
+
       }
     default:
       return state;

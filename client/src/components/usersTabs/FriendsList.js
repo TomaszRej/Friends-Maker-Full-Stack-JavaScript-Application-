@@ -2,28 +2,28 @@ import React from 'react'
 import {Icon, List, Button, Popup, Grid} from 'semantic-ui-react'
 import {connect} from 'react-redux';
 import FriendItem from './FriendItem';
+//import {updateUser} from '../../actions/userAction';
 import openSocket from "socket.io-client";
+import areTheUsersFriends from '../../helpers/areTheUsersFriends';
+
+import {updateUser} from "../../actions/userActions";
 
 class FriendsList extends React.Component {
 
-
-  componentDidMount() {
-    const socket = openSocket('http://localhost:8000');
-
-    socket.on('follow', data => {
-        this.setState({
-          //
-        })
-    })
-  }
-
   render() {
-    const {users, currUser} = this.props;
+    const { updatedCurrUser, updatedUsers} = this.props;
+
+    const currUser = updatedCurrUser !== null ? updatedCurrUser : this.props.currUser;
+    const users = updatedUsers.length !== 0  ? updatedUsers : this.props.users;
+
+
 
     const friends = users.filter(user => {
-      if (user.following.includes(currUser._id) && currUser.following.includes(user._id)) {
+      if (areTheUsersFriends(currUser, user)) {
         return user
       }
+
+
     })
 
     return (
@@ -42,4 +42,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps)(FriendsList);
+export default connect(mapStateToProps, {updateUser})(FriendsList);

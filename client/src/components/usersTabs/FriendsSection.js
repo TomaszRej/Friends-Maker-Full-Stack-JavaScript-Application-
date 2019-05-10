@@ -1,7 +1,7 @@
 import React from 'react';
 import FriendsList from './FriendsList';
 import InvitationsList from './InvitationsList';
-import { List } from 'semantic-ui-react';
+import {List} from 'semantic-ui-react';
 
 class FriendsSection extends React.Component {
 
@@ -9,17 +9,20 @@ class FriendsSection extends React.Component {
     return (
       <List divided relaxed>
         <List.Item>
-          <InvitationsList/>
+          <InvitationsList updatedCurrUser={this.props.updatedCurrUser}
+                           updatedUsers={this.props.updatedUsers}
+          />
         </List.Item>
         <List.Item>
-          <FriendsList />
+          <FriendsList updatedCurrUser={this.props.updatedCurrUser}
+                       updatedUsers={this.props.updatedUsers}
+          />
         </List.Item>
       </List>
 
     )
   }
 }
-
 
 
 export default FriendsSection;

@@ -8,7 +8,8 @@ import {
   FRIENDS_LOADED
 } from './types';
 import tokenConfig from '../helpers/tokenConfig';
-
+import {openLoginModal} from "./layoutActions";
+import {logout} from "./authActions";
 
 export const follow = (currUserId, userToFollowId) => async (dispatch, getState) => {
   const body = {currUserId, userToFollowId};
@@ -58,6 +59,16 @@ export const getUsers = () => async (dispatch, getState) => {
     type: USERS_LOADING,
 
   })
+
+  const tokenExp = getState().auth.tokenExp;
+
+  //checking if token expire
+  if(getState().auth.tokenExp === null ){
+    dispatch(logout())
+    dispatch(openLoginModal())
+    return
+  }
+
 
   try {
     const res = await axios.get('http://localhost:8000/api/users/', tokenConfig(getState));

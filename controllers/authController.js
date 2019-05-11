@@ -90,17 +90,9 @@ exports.loginUser = async (req, res, next) => {
       { expiresIn: '1h'}
     );
 
-    // ++
     const decodedToken = jwt.verify(token, config.get('jwtSecret'));
-   
-    const decodedExp = decodedToken.exp - decodedToken.iat;
-    const seconds = new Date().getTime() / 1000;
-    const fromNow = decodedToken.exp - seconds;
-    console.log(decodedExp, seconds, fromNow, 'decoded Exp  ')
 
-    // --
-
-    res.status(200).json({ token: token, userId: user._id.toString(), user: user });
+    res.status(200).json({ userId: user._id.toString(), user: user, token: token, tokenExp: decodedToken.exp, tokenIat: decodedToken.iat  });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;

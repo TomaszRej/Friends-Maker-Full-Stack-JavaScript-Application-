@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="381353a7-fa1b-49bb-bfa3-10a3dd0cd32d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/client/src/actions/authActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/authActions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/actions/userActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/actions/userActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/PostsList.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PostsList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/helpers/tokenConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/helpers/tokenConfig.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/reducers/authReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/reducers/authReducer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/authController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/authController.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -19,32 +15,22 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5776725">
+    <splitter split-orientation="horizontal" split-proportion="0.76334405">
       <split-first>
         <leaf>
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/controllers/authController.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1065">
-                  <caret line="91" selection-start-line="91" selection-end-line="91" />
+                <state relative-caret-position="362">
+                  <caret line="93" selection-start-line="93" selection-end-line="93" />
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/routes/auth.js">
-              <provider selected="true" editor-type-id="text-editor" />
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/routes/post.js">
-              <provider selected="true" editor-type-id="text-editor" />
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/client/src/actions/authActions.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="787">
+                <state relative-caret-position="1435">
                   <caret line="130" selection-start-line="130" selection-end-line="130" />
                   <folding>
                     <element signature="e#0#26#0" expanded="true" />
@@ -56,10 +42,31 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/client/src/actions/userActions.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="256">
-                  <caret line="63" column="17" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="17" />
+                <state relative-caret-position="337">
+                  <caret line="63" column="51" lean-forward="true" selection-start-line="63" selection-start-column="51" selection-end-line="63" selection-end-column="51" />
                   <folding>
                     <element signature="e#0#26#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/controllers/userController.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="308">
+                  <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/client/src/components/PostsList.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="538">
+                  <caret line="113" column="26" selection-start-line="113" selection-start-column="26" selection-end-line="113" selection-end-column="26" />
+                  <folding>
+                    <element signature="e#0#39#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -120,7 +127,7 @@
             <entry file="file://$PROJECT_DIR$/controllers/authController.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="695">
-                  <caret line="94" column="82" lean-forward="true" selection-start-line="94" selection-start-column="82" selection-end-line="94" selection-end-column="136" />
+                  <caret line="95" column="82" lean-forward="true" selection-start-line="95" selection-start-column="82" selection-end-line="95" selection-end-column="136" />
                 </state>
               </provider>
             </entry>
@@ -150,10 +157,10 @@
         <option value="$PROJECT_DIR$/client/src/components/AddPostModal.js" />
         <option value="$PROJECT_DIR$/client/src/components/usersTabs/UsersTabs.js" />
         <option value="$PROJECT_DIR$/client/src/components/PostsList.js" />
-        <option value="$PROJECT_DIR$/controllers/authController.js" />
         <option value="$PROJECT_DIR$/client/src/actions/authActions.js" />
         <option value="$PROJECT_DIR$/client/src/reducers/authReducer.js" />
         <option value="$PROJECT_DIR$/client/src/helpers/tokenConfig.js" />
+        <option value="$PROJECT_DIR$/controllers/authController.js" />
         <option value="$PROJECT_DIR$/client/src/actions/userActions.js" />
       </list>
     </option>
@@ -199,7 +206,7 @@
               <item name="UserAuth_Express_React" type="462c0819:PsiDirectoryNode" />
               <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="helpers" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="UserAuth_Express_React" type="b2602c69:ProjectViewProjectNode" />
@@ -269,13 +276,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33507000" />
+    <option name="totallyTimeSpent" value="36028000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18114798" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.18114798" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -398,13 +405,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/userController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/usersTabs/FriendsSection.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -471,10 +471,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/PostsList.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="57" column="41" lean-forward="true" selection-start-line="57" selection-start-column="41" selection-end-line="57" selection-end-column="41" />
+        <state relative-caret-position="538">
+          <caret line="113" column="26" selection-start-line="113" selection-start-column="26" selection-end-line="113" selection-end-column="26" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -495,13 +495,6 @@
     <entry file="file://$PROJECT_DIR$/client/src/actions/loginErrorActions.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/authController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1065">
-          <caret line="91" selection-start-line="91" selection-end-line="91" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/helpers/tokenConfig.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
@@ -515,16 +508,6 @@
           <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="27" />
           <folding>
             <element signature="e#0#248#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/actions/authActions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="787">
-          <caret line="130" selection-start-line="130" selection-end-line="130" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -546,10 +529,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/components/Pagination.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/userController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/authController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="93" selection-start-line="93" selection-end-line="93" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/actions/authActions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1435">
+          <caret line="130" selection-start-line="130" selection-end-line="130" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/actions/userActions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="63" column="17" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="17" />
+        <state relative-caret-position="337">
+          <caret line="63" column="51" lean-forward="true" selection-start-line="63" selection-start-column="51" selection-end-line="63" selection-end-column="51" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>

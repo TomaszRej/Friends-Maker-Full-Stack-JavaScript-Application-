@@ -33,7 +33,7 @@ export const updateUser = (userId) => async (dispatch, getState) => {
   })
 
   try {
-     const res = await axios.put(`http://localhost:8000/api/users/${userId}`, tokenConfig(getState));
+    const res = await axios.put(`http://localhost:8000/api/users/${userId}`, tokenConfig(getState));
 
     dispatch({
       type: USERS_LOADED,
@@ -60,10 +60,11 @@ export const getUsers = () => async (dispatch, getState) => {
 
   })
 
-  const tokenExp = getState().auth.tokenExp;
-
   //checking if token expire
-  if(getState().auth.tokenExp === null ){
+  const nowInSecends = new Date().getTime() / 1000;
+  const expireTimeInSec = getState().auth.tokenExp - nowInSecends;
+
+  if (getState().auth.token && expireTimeInSec < 0) {
     dispatch(logout())
     dispatch(openLoginModal())
     return

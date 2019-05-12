@@ -92,6 +92,7 @@ exports.loginUser = async (req, res, next) => {
 
     const decodedToken = jwt.verify(token, config.get('jwtSecret'));
 
+
     res.status(200).json({ userId: user._id.toString(), user: user, token: token, tokenExp: decodedToken.exp, tokenIat: decodedToken.iat  });
   } catch (err) {
     if (!err.statusCode) {

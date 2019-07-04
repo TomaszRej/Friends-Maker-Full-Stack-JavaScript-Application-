@@ -133,6 +133,7 @@ class LoginModal extends Component {
     }
 }
 
+
 const mapStateToProps = state => {
     return {
         isLoading: state.auth.isLoading,

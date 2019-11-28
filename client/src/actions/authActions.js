@@ -105,6 +105,7 @@ export const login = ({email, password}, rememberMe) => async dispatch => {
 
   try {
     const res = await axios.post('http://localhost:8000/api/users/login', body, config);
+debugger
 
     dispatch({
       type: LOGIN_SUCCESS,

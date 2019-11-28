@@ -41,7 +41,7 @@ export default function (state = initialState, action) {
           }
           return user
         })
-      }
+      };
 
     case UPDATING_USER_ERROR:
       return {
@@ -49,7 +49,8 @@ export default function (state = initialState, action) {
         isLoading: false,
         updatingError: action.payload
 
-      }
+      };
+
     default:
       return state;
   }

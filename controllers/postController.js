@@ -2,6 +2,8 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const ObjectId = require('mongodb').ObjectID;
 const io = require('../socket');
+
+
 exports.getPosts = async (req, res, next) => {
   try {
     const posts = await Post.find();
@@ -13,7 +15,7 @@ exports.getPosts = async (req, res, next) => {
     }
     next(err);
   }
-}
+};
 
 
 exports.addPost = async (req, res, next) => {

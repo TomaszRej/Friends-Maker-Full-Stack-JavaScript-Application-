@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import {Grid, Card, Icon, Button, Modal, Segment, Dimmer, Loader, List} from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import AddPostModal from './AddPostModal';
@@ -6,12 +6,12 @@ import {openAddPostModal} from '../actions/layoutActions';
 import {addToPosts} from '../actions/postActions';
 import openSocket from 'socket.io-client';
 
-class PostsList extends Component {
+
+const PostsList = (props) => {
 
 
-  componentDidMount() {
-
-    const {addToPosts} = this.props;
+  useEffect(() => {
+    const {addToPosts} = props;
 
     const socket = openSocket('http://localhost:8000');
     socket.on('posts', data => {
@@ -20,14 +20,15 @@ class PostsList extends Component {
       }
 
     });
-  }
+  }, []);
 
-  handleClickAddPost = () => {
-    const {openAddPostModal} = this.props;
+
+  const handleClickAddPost = () => {
+    const {openAddPostModal} = props;
     openAddPostModal();
   }
 
-  renderPostContent = (title, description) => {
+  const renderPostContent = (title, description) => {
     return (
 
       <List selection verticalAlign='middle'>
@@ -43,8 +44,8 @@ class PostsList extends Component {
 
   }
 
-  renderPosts = () => {
-    const {currUser, posts, postsLoading} = this.props;
+  const renderPosts = () => {
+    const {currUser, posts, postsLoading} = props;
 
     if (postsLoading) {
       return <Segment style={{height: '300px'}}>
@@ -58,11 +59,10 @@ class PostsList extends Component {
       if (post.author === currUser._id) {
         return post
       }
-      if(currUser.following.find(u => u === post.author)){
+      if (currUser.following.find(u => u === post.author)) {
         return post
       }
     })
-
 
 
     const postsToReturn = onlyFriendsPosts.map((post) => {
@@ -77,7 +77,7 @@ class PostsList extends Component {
 
             </Card.Content>
             <Card.Content>
-              {this.renderPostContent(post.title, post.description)}
+              {renderPostContent(post.title, post.description)}
             </Card.Content>
             <Card.Content extra>
               <Icon name='heart'/>
@@ -89,12 +89,11 @@ class PostsList extends Component {
     })
 
 
-
     return postsToReturn
 
   }
 
-  render() {
+
     return (
       <>
         <Grid padded centered>
@@ -104,20 +103,20 @@ class PostsList extends Component {
                 fluid
                 primary
                 style={{paddingLeft: '30px', paddingRight: '30px'}}
-                onClick={this.handleClickAddPost}
+                onClick={handleClickAddPost}
               >Add Post</Button>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width="6">
-              {this.renderPosts()}
+              {renderPosts()}
             </Grid.Column>
           </Grid.Row>
         </Grid>
         <AddPostModal/>
       </>
     )
-  }
+
 }
 
 

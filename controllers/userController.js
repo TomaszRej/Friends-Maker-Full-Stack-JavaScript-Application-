@@ -19,7 +19,8 @@ exports.followUser = async (req, res, next) => {
 
     io.getIO().emit('follow', {
       action: 'follow',
-      users: [currUser, user]
+      data: {currUser, user}
+
     });
 
     res.status(200).json({ message: 'Users updated!', users: [ currUser, user ] });

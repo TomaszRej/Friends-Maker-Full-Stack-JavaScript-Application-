@@ -6,6 +6,7 @@ import registerErrorReducer from './registerErrorReducer';
 import loginErrorReducer from './loginErrorReducer';
 import usersReducer from './usersReducer';
 import postsReducer from './postsReducer';
+import chatReducer from "./chatReducer";
 
 export default combineReducers({
     posts: postsReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
     registerError: registerErrorReducer,
     error: errorReducer,
     auth: authReducer,
-    layout: layoutReducer
+    layout: layoutReducer,
+    chatReducer: chatReducer
 });

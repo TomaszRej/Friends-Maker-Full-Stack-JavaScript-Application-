@@ -8,8 +8,8 @@ import { getUsers } from '../../actions/userActions';
 
 class LoginModal extends Component {
     state = {
-        email: '',
-        password: '',
+        email: 'James@gmail.com',
+        password: '123456',
         rememberMe: false,
         message: []
     }

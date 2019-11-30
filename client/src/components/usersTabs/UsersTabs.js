@@ -2,61 +2,62 @@ import React, {useEffect, useState} from 'react'
 import {Tab} from 'semantic-ui-react'
 import UsersList from './UsersList';
 import FriendsSection from './FriendsSection';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import openSocket from "socket.io-client";
-import {updateUser} from "../../actions/userActions";
+import { updateLoggedUser} from "../../actions/authActions";
 
 
 const UsersTabs = (props) => {
-const [updatedCurrUser, setUpdatedCurrUser] = useState(null);
-const [updatedUsers, setUpdatedUsers] = useState([])
+  const [updatedCurrUser, setUpdatedCurrUser] = useState(null);
+  const loggedUser = useSelector(state => state.auth.user);
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
     const socket = openSocket('http://localhost:8000');
 
+    //todo instead of local state dispatch action which will update user profile
+
     socket.on('follow', data => {
 
+      const newUser = {...loggedUser};
 
-      console.log(data.data.currUser, "currUser");
-      console.log(props.loggedUser, "logeduser");
-      console.log(data.data.user, "user");
+      if (loggedUser._id === data.data.user._id) {
+        newUser.followers.push(data.data.currUser._id);
+      }
 
+      if (loggedUser._id === data.data.currUser._id) {
+        newUser.following.push(data.data.user._id);
+      }
 
+dispatch(updateLoggedUser(newUser))
+     // setUpdatedCurrUser(newUser);
 
-      debugger
 
     })
-  }, [])
+  }, []);
 
 
   const panes = [
     {
       menuItem: 'Friends',
       render: () => <Tab.Pane><FriendsSection
-        updatedCurrUser={updatedCurrUser}
-        updatedUsers={updatedUsers}
+
+
       /></Tab.Pane>
     },
     {
       menuItem: 'All users', render: () => <Tab.Pane><UsersList
         updatedCurrUser={updatedCurrUser}
-        updatedUsers={updatedUsers}
       /></Tab.Pane>
     },
-  ]
+  ];
+
   return (
     <Tab panes={panes}/>
   )
 
-}
-
-const mapStateToProps = state => {
-  return {
-    loggedUser: state.auth.user,
-    users: state.users.users
-  }
-}
+};
 
 
-export default connect(mapStateToProps, {updateUser})(UsersTabs);
+export default UsersTabs;

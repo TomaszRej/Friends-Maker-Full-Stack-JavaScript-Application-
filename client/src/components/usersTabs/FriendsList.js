@@ -1,45 +1,37 @@
 import React from 'react'
-import {Icon, List, Button, Popup, Grid} from 'semantic-ui-react'
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import FriendItem from './FriendItem';
-//import {updateUser} from '../../actions/userAction';
-import openSocket from "socket.io-client";
 import areTheUsersFriends from '../../helpers/areTheUsersFriends';
-
-import {updateUser} from "../../actions/userActions";
-
-class FriendsList extends React.Component {
-
-  render() {
-    const { updatedCurrUser, updatedUsers} = this.props;
-
-    const currUser = updatedCurrUser !== null ? updatedCurrUser : this.props.currUser;
-    const users = updatedUsers.length !== 0  ? updatedUsers : this.props.users;
+import { chatWithFriendAction} from "../../actions/chatActions";
 
 
+const FriendsList = () => {
+  const currUser = useSelector(state => state.auth.user);
+  const users = useSelector(state => state.users.users);
+  const dispatch = useDispatch();
 
-    const friends = users.filter(user => {
-      if (areTheUsersFriends(currUser, user)) {
-        return user
-      }
+
+  const friends = users.filter(user => {
+    if (areTheUsersFriends(currUser, user)) {
+      return user
+    }
+  });
 
 
+  const chatWithFriend = friend => {
+    dispatch(chatWithFriendAction(friend));
+  };
+
+  return (
+    friends.map(friend => {
+      return <FriendItem
+        onClick={() => chatWithFriend(friend)}
+        friend={friend}/>
     })
 
-    return (
-      friends.map(friend => {
-        return <FriendItem friend={friend}/>
-      })
-    )
-  }
-}
+  )
 
-const mapStateToProps = state => {
-  return {
-    currUser: state.auth.user,
-    users: state.users.users,
-  }
-}
+};
 
 
-export default connect(mapStateToProps, {updateUser})(FriendsList);
+export default FriendsList;

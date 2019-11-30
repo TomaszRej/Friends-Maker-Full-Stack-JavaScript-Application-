@@ -3,22 +3,14 @@ import {Icon, List, Button, Popup, Grid, Header, GridColumn} from 'semantic-ui-r
 import {connect} from 'react-redux'
 import areTheUsersFriends from '../../helpers/areTheUsersFriends'
 import {follow} from '../../actions/userActions'
-import openSocket from "socket.io-client"
+
 import InvitationItem from './InvitationItem'
 
 
 const InvitationsList = (props) => {
 
 
-  useEffect(() => {
-    const socket = openSocket('http://localhost:8000');
-    socket.on('follow', data => {
 
-
-      alert(JSON.stringify(data))
-
-    });
-  },[]);
 
   const handleAddFriendClick = (userToFollow) => {
     const {currUser, follow} = props
@@ -26,10 +18,10 @@ const InvitationsList = (props) => {
   };
 
 
-  const {updatedCurrUser, updatedUsers} = props
+  const {updatedCurrUser} = props;
 
   const currUser = updatedCurrUser ? updatedCurrUser : props.currUser;
-  const users = updatedUsers.length !== 0 ? updatedUsers : props.users;
+  const users = props.users;
 
 
   return (

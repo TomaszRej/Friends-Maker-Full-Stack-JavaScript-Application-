@@ -10,12 +10,11 @@ class FriendsSection extends React.Component {
       <List divided relaxed>
         <List.Item>
           <InvitationsList updatedCurrUser={this.props.updatedCurrUser}
-                           updatedUsers={this.props.updatedUsers}
+
           />
         </List.Item>
         <List.Item>
           <FriendsList updatedCurrUser={this.props.updatedCurrUser}
-                       updatedUsers={this.props.updatedUsers}
           />
         </List.Item>
       </List>

@@ -8,8 +8,6 @@ import openSocket from 'socket.io-client';
 
 
 const PostsList = (props) => {
-
-
   useEffect(() => {
     const {addToPosts} = props;
 
@@ -18,19 +16,17 @@ const PostsList = (props) => {
       if (data.action === 'create') {
         addToPosts({data});
       }
-
     });
   }, []);
-
 
   const handleClickAddPost = () => {
     const {openAddPostModal} = props;
     openAddPostModal();
-  }
+  };
 
   const renderPostContent = (title, description) => {
     return (
-
+    <div>
       <List selection verticalAlign='middle'>
         <List.Item>
           {/* <Image avatar src='/images/avatar/small/helen.jpg' /> */}
@@ -40,9 +36,9 @@ const PostsList = (props) => {
           </List.Content>
         </List.Item>
       </List>
+    </div>
     )
-
-  }
+  };
 
   const renderPosts = () => {
     const {currUser, posts, postsLoading} = props;
@@ -55,17 +51,14 @@ const PostsList = (props) => {
       </Segment>
     }
 
-    const onlyFriendsPosts = posts.filter(post => {
+    return  posts.filter(post => {
       if (post.author === currUser._id) {
         return post
       }
       if (currUser.following.find(u => u === post.author)) {
         return post
       }
-    })
-
-
-    const postsToReturn = onlyFriendsPosts.map((post) => {
+    }).map((post) => {
 
       return (
         <Grid.Row key={post.id}
@@ -89,9 +82,8 @@ const PostsList = (props) => {
     })
 
 
-    return postsToReturn
 
-  }
+  };
 
 
     return (
@@ -111,8 +103,11 @@ const PostsList = (props) => {
             <Grid.Column width="6">
               {renderPosts()}
             </Grid.Column>
+
+
           </Grid.Row>
         </Grid>
+
         <AddPostModal/>
       </>
     )

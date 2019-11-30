@@ -5,11 +5,11 @@ import {
   LOGIN_LOADING,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-   LOGOUT_SUCCESS,
+  LOGOUT_SUCCESS,
   REGISTER_LOADING,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-
+  UPDATE_LOGGED_USER
 } from '../actions/types';
 
 
@@ -76,9 +76,9 @@ export default function (state = initialState, action) {
       }
     // case LOGOUT_SUCCESS:
     case LOGOUT_SUCCESS:
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('tokenExp');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('tokenExp');
       return {
         ...state,
         token: null,
@@ -95,6 +95,12 @@ export default function (state = initialState, action) {
         user: null,
         //isAuthenticated: false,
         isLoading: false
+      };
+
+    case UPDATE_LOGGED_USER:
+      return {
+        ...state,
+        user: action.payload
       };
     default:
       return state;

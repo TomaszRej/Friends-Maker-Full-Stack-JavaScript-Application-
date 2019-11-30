@@ -18,11 +18,11 @@ class UsersList extends React.Component {
   }
 
   render() {
-    const { updatedCurrUser, updatedUsers} = this.props;
+    const { updatedCurrUser} = this.props;
 
 
     const currUser = updatedCurrUser !== null ? updatedCurrUser : this.props.currUser;
-    const users = updatedUsers.length !== 0 ? updatedUsers : this.props.users;
+    const users = this.props.users;
 
 
     const allUsersExceptTheLoggedOne = users.filter(u => u._id !== currUser._id);

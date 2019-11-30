@@ -18,7 +18,8 @@ import {
   REGISTER_LOADING,
   OPEN_LOGIN_MODAL,
   CLOSE_LOGIN_MODAL,
-  CLOSE_REGISTER_MODAL
+  CLOSE_REGISTER_MODAL,
+  UPDATE_LOGGED_USER
 } from './types';
 
 // // Check token & load user
@@ -105,8 +106,6 @@ export const login = ({email, password}, rememberMe) => async dispatch => {
 
   try {
     const res = await axios.post('http://localhost:8000/api/users/login', body, config);
-debugger
-
     dispatch({
       type: LOGIN_SUCCESS,
       payload: {
@@ -153,6 +152,13 @@ debugger
 //   };
 // };
 
+export const updateLoggedUser = (user) => dispatch => {
+  dispatch({
+    type: UPDATE_LOGGED_USER,
+    payload: user
+  });
+};
+
 export const logout = () => dispatch => {
   dispatch({
     type: LOGOUT_SUCCESS
@@ -161,4 +167,4 @@ export const logout = () => dispatch => {
     type: USERS_LOADED,
     payload: []
   });
-}
+};

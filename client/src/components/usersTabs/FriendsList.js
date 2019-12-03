@@ -2,7 +2,7 @@ import React from 'react'
 import {useSelector, useDispatch} from 'react-redux';
 import FriendItem from './FriendItem';
 import areTheUsersFriends from '../../helpers/areTheUsersFriends';
-import { chatWithFriendAction} from "../../actions/chatActions";
+import {chatWithFriendAction, createChatRoomAction} from "../../actions/chatActions";
 
 
 const FriendsList = () => {
@@ -20,6 +20,7 @@ const FriendsList = () => {
 
   const chatWithFriend = friend => {
     dispatch(chatWithFriendAction(friend));
+    dispatch(createChatRoomAction(friend._id));
   };
 
   return (

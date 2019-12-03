@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/post');
-
+const chatsRoutes = require('./routes/chat');
 
 const app = express();
 
@@ -25,6 +25,8 @@ app.use((req, res, next) => {
 
 app.use('/api/users', authRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/chat', chatsRoutes);
+
 
 app.use((error, req, res, next) => {
 
@@ -58,8 +60,36 @@ mongoose
     io.on('connection', socket => {
       console.log('Client connected');
 
-    })
+      socket.on('createChatRoom', (data) => {
+        console.log("data", data)
 
+        const roomName = data.userId + data.friendId;
+
+        socket.join(roomName, ()=> {
+            let rooms = Object.keys(socket.rooms);
+
+          console.log(rooms);
+
+
+            console.log(socket.rooms, "socketrooms")
+        })
+
+      });
+
+      socket.on("message", (message) => {
+        console.log(message, "messageeeeeeeee")
+      })
+
+
+      socket.on('disconnect', function () {
+        console.log('user disconnected');
+      });
+
+
+
+
+
+    })
   })
   .catch(err => console.log(err));
 

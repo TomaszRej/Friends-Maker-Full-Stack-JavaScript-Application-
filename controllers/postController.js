@@ -34,6 +34,7 @@ exports.addPost = async (req, res, next) => {
       post:  newPost
     });
 
+
     res.status(201).json({ message: "Post created!", post: newPost })
   } catch (err) {
     if (!err.statusCode) {

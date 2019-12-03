@@ -1,11 +1,15 @@
 import React, {useState} from 'react'
 import {Card, Form, TextArea, Button, Comment, Message, Header, Grid, Icon} from 'semantic-ui-react';
 import {useSelector, useDispatch} from "react-redux";
-import {stopChatingWithFriendAction} from "../../actions/chatActions"
+import {stopChattingWithFriendAction, sendMessageAction} from "../../actions/chatActions"
 
 const ChatWindow = ({step, friend}) => {
   const dispatch = useDispatch();
   const [message, setMessage] = useState();
+
+  const handleSendMessage = () => {
+    dispatch(sendMessageAction(friend._id, message))
+  };
 
   return (
     <Card style={{
@@ -14,16 +18,16 @@ const ChatWindow = ({step, friend}) => {
       right: 300 * step,
     }}>
       <Card.Content children={
-        <Header style={{display: "flex", justifyContent: "space-between"}}>{friend && friend.name || "User name"}
-
-          <Icon name="close" onClick={() => {
-            dispatch(stopChatingWithFriendAction(friend));
-          }}/>
+        <Header style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+          {friend && friend.name || "User name"}
+          <Button style={{flex: 0, fontSize: 14, padding: 10}} circular icon='close' onClick={() => {
+            dispatch(stopChattingWithFriendAction(friend));
+          }} />
         </Header>
       }/>
 
       <Card.Content
-        style={{height: 200, overflowY: "scroll"}}>
+        style={{height: 250, overflowY: "scroll"}}>
         <Comment.Group>
           <Comment>
             <Comment.Content>
@@ -56,10 +60,13 @@ const ChatWindow = ({step, friend}) => {
         </Comment.Group>
 
       </Card.Content>
+
+
+
       <Card.Content extra>
-        <Form>
+        <Form onSubmit={handleSendMessage}>
           <TextArea  value={message} onChange={(e) => setMessage(e.target.value)} placeholder='write a message'/>
-          <Button positive fluid>
+          <Button submit positive fluid >
             Send
           </Button>
         </Form>

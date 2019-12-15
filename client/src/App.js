@@ -14,12 +14,43 @@ import {login, logout} from './actions/authActions';
 import UsersTabs from './components/usersTabs/UsersTabs';
 import ChatWindow from "./components/chat/ChatWindow";
 
+import {clearNotification} from "./actions/notificationActions";
+
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      showNotification: false
+    }
+  }
+
 
   componentDidMount() {
     this.props.getUsers();
     this.props.getPosts();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+
+    if (prevProps.notification !== this.props.notification) {
+      if (this.props.notification.length !== 0)
+        this.setState({
+          showNotification: true
+        });
+      setTimeout(() => {
+
+        this.setState({
+          showNotification: false
+        });
+
+        this.props.clearNotification();
+
+      }, 3000);
+
+
+    }
   }
 
 
@@ -33,6 +64,27 @@ class App extends Component {
 
     return (
       <BrowserRouter>
+        {this.state.showNotification &&
+        <div style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: 'center',
+          textAlign: "center",
+          fontSize: 40,
+          color: "white",
+          backgroundColor: "green",
+          height: '200px',
+          width: "100%",
+          zIndex: 1,
+          position: "absolute",
+          top: 0,
+          left: 0
+        }}>
+          <div style={{marginTop: 50}}>{this.props.notification}</div>
+        </div>
+
+        }
+
         <Grid padded centered style={{backgroundColor: '#f5f5f5'}}>
           <Grid.Row style={{backgroundColor: 'white'}}>
             <Grid.Column width="16">
@@ -99,9 +151,13 @@ const mapStateToProps = state => {
     activeChats: state.chatReducer.activeChats,
     user: state.auth.user,
     isAuthanticated: state.auth.isAuthanticated,
-    posts: state.posts.posts
+    posts: state.posts.posts,
+    notification: state.notificationReducer.notification
 
   }
-}
+};
 
-export default connect(mapStateToProps, {getUsers, getPosts, login,})(App);
+
+
+
+export default connect(mapStateToProps, {getUsers, getPosts, login, clearNotification})(App);

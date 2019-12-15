@@ -23,6 +23,7 @@ const FriendsList = () => {
     dispatch(createChatRoomAction(friend._id));
   };
 
+
   return (
     friends.map(friend => {
       return <FriendItem

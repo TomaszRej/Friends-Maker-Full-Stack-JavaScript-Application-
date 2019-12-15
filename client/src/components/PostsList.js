@@ -1,13 +1,16 @@
 import React, {useEffect} from 'react';
 import {Grid, Card, Icon, Button, Modal, Segment, Dimmer, Loader, List} from 'semantic-ui-react';
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import AddPostModal from './AddPostModal';
 import {openAddPostModal} from '../actions/layoutActions';
 import {addToPosts} from '../actions/postActions';
+import {notifyAction} from '../actions/notificationActions';
 import openSocket from 'socket.io-client';
 
 
 const PostsList = (props) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const {addToPosts} = props;
 
@@ -16,6 +19,11 @@ const PostsList = (props) => {
       if (data.action === 'create') {
         addToPosts({data});
       }
+
+      dispatch(notifyAction({message: "New post has been added"}))
+
+
+
     });
   }, []);
 

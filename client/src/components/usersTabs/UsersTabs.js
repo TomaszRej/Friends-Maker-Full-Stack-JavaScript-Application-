@@ -4,8 +4,8 @@ import UsersList from './UsersList';
 import FriendsSection from './FriendsSection';
 import {useSelector, useDispatch} from 'react-redux';
 import openSocket from "socket.io-client";
-import { updateLoggedUser} from "../../actions/authActions";
-
+import {updateLoggedUser} from "../../actions/authActions";
+import {notifyAction} from '../../actions/notificationActions';
 
 const UsersTabs = (props) => {
   const [updatedCurrUser, setUpdatedCurrUser] = useState(null);
@@ -24,14 +24,21 @@ const UsersTabs = (props) => {
 
       if (loggedUser._id === data.data.user._id) {
         newUser.followers.push(data.data.currUser._id);
+        if (loggedUser.following.includes(data.data.currUser._id)) {
+          dispatch(notifyAction({message: `You are now friend with ${data.data.currUser.name}`}))
+        }
+
       }
 
       if (loggedUser._id === data.data.currUser._id) {
         newUser.following.push(data.data.user._id);
+        if (loggedUser.followers.includes(data.data.user._id)) {
+          dispatch(notifyAction({message: `You are now friend with ${data.data.user.name}`}))
+        }
       }
 
-dispatch(updateLoggedUser(newUser))
-     // setUpdatedCurrUser(newUser);
+      dispatch(updateLoggedUser(newUser))
+      // setUpdatedCurrUser(newUser);
 
 
     })

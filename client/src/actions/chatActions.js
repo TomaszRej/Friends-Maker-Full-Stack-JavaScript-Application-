@@ -21,6 +21,9 @@ export const stopChattingWithFriendAction = friend => dispatch => {
     type: STOP_CHATTING_WITH_FRIEND,
     payload: friend._id
   });
+
+  socket.emit('disconnect');
+  socket.of();
 };
 
 export const createChatRoomAction = (friendId) => async (dispatch, getState) => {

@@ -59,9 +59,10 @@ mongoose
 
     io.on('connection', socket => {
       console.log('Client connected');
+      console.log('Client connected');
 
       socket.on('createChatRoom', (data) => {
-        console.log("data", data)
+        console.log("data", data);
 
         const roomName = data.userId + data.friendId;
 
@@ -76,9 +77,9 @@ mongoose
 
       });
 
-      socket.on("message", (message) => {
-        console.log(message, "messageeeeeeeee")
-      })
+
+      // socket.on("sendMessage")
+
 
 
       socket.on('disconnect', function () {

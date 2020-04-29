@@ -23,7 +23,6 @@ export const stopChattingWithFriendAction = friend => dispatch => {
   });
 
   socket.emit('disconnect');
-  socket.of();
 };
 
 export const createChatRoomAction = (friendId) => async (dispatch, getState) => {
@@ -31,7 +30,7 @@ export const createChatRoomAction = (friendId) => async (dispatch, getState) => 
 const state = getState();
 const currUser = state.auth.user;
 
-  socket.emit('createChatRoom',  {userId: currUser._id, friendId: friendId})
+  socket.emit('join private room',  {emitterId: currUser._id, receiverId: friendId})
 
 
 };
@@ -40,7 +39,7 @@ export const sendMessageAction = (friendId, message) =>  async (dispatch , getSt
   const state = getState();
   const currUser = state.auth.user;
 
-  socket.emit('message', message);
+  socket.emit('send private message', message);
   //socket.to(currUser._id + friendId).emit("message", message);
 
 

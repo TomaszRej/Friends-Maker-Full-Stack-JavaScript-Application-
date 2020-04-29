@@ -135,9 +135,9 @@ export const login = ({email, password}, rememberMe) => async dispatch => {
   } catch (err) {
     console.log(err, 'message bledy z auth login actions');
 
-    dispatch(
-      returnLoginErrors(err, err.response.status, 'REGISTER_FAIL')
-    );
+    // dispatch(
+    //   returnLoginErrors(err, err.response.status, 'REGISTER_FAIL')
+    // );
     dispatch({
       type: LOGIN_FAIL
     });

@@ -1,11 +1,21 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Card, Form, TextArea, Button, Comment, Message, Header, Grid, Icon} from 'semantic-ui-react';
 import {useSelector, useDispatch} from "react-redux";
 import {stopChattingWithFriendAction, sendMessageAction} from "../../actions/chatActions"
 
+import openSocket from "socket.io-client";
+
 const ChatWindow = ({step, friend}) => {
   const dispatch = useDispatch();
   const [message, setMessage] = useState();
+
+
+  useEffect(() => {
+    const socket = openSocket('http://localhost:8000');
+    socket.on('message', msg => {
+      console.warn(msg, "WIADOMOSC Z CHATU FRONT")
+    })
+  },[])
 
   const handleSendMessage = () => {
     dispatch(sendMessageAction(friend._id, message))

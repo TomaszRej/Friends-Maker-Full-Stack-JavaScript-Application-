@@ -7,6 +7,11 @@ const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/post');
 const chatsRoutes = require('./routes/chat');
 
+const {addUser, getUser} = require("./helpers/socketUsers");
+const socketEvents = require("./socketEvents");
+const message = require('./sockets/message');
+const joinRoom = require('./sockets/joinRoom');
+
 const app = express();
 
 app.use(express.json());
@@ -53,44 +58,17 @@ mongoose
         res.sendFile(path.resolve("client", "build", "index.html"));
       })
     }
+
     const port = process.env.PORT || 8000;
     const server = app.listen(port, () => console.log(`Server started on port ${port}`));
     const io = require('./socket').init(server);
 
-    io.on('connection', socket => {
-      console.log('Client connected');
-      console.log('Client connected');
-
-      socket.on('createChatRoom', (data) => {
-        console.log("data", data);
-
-        const roomName = data.userId + data.friendId;
-
-        socket.join(roomName, ()=> {
-            let rooms = Object.keys(socket.rooms);
-
-          console.log(rooms);
-
-
-            console.log(socket.rooms, "socketrooms")
-        })
-
-      });
-
-
-      // socket.on("sendMessage")
-
-
-
-      socket.on('disconnect', function () {
-        console.log('user disconnected');
-      });
-
-
-
-
-
+    io.on('connection', async socket => {
+      message(io, socket);
+      joinRoom(io, socket);
     })
+
+
   })
   .catch(err => console.log(err));
 
